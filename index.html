@@ -1,0 +1,33 @@
+<!doctype html>
+<!--
+[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+INPUT: Browser loads this static page from localhost.
+OUTPUT: Full-viewport Siri-style WebGL scene with accessible status text.
+POS: Root entry point; script order wires shader, renderer, audio, and app state.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Glass Voice Orb Study</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="siri-page">
+      <canvas id="siri-canvas" class="siri-canvas" aria-label="Glass voice orb visual effect"></canvas>
+      <button id="siri-control" class="siri-control" type="button">Hold to speak</button>
+      <p id="siri-status" class="sr-only" aria-live="polite">Idle.</p>
+    </main>
+
+    <script defer src="./src/tuner.js?v=9"></script>
+    <script defer src="./src/backgrounds.js?v=9"></script>
+    <script defer src="./src/shaders.js?v=9"></script>
+    <script defer src="./src/pipeline.js?v=9"></script>
+    <script defer src="./src/uniforms.js?v=9"></script>
+    <script defer src="./src/state.js?v=9"></script>
+    <script defer src="./src/audio.js?v=9"></script>
+    <script defer src="./src/renderer.js?v=9"></script>
+    <script defer src="./src/main.js?v=9"></script>
+  </body>
+</html>

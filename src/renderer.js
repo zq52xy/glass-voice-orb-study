@@ -1,0 +1,192 @@
+/*
+[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+INPUT: Canvas, loaded shaders, background image, and per-frame state/audio channels.
+OUTPUT: Three-FBO glass-refraction render of the siri27 effect onto the canvas.
+POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
+*/
+(function () {
+  const P = window.SiriPipeline;
+  const DPR_CAP = 2;
+
+  // siri27 布局常量（可被 window.SIRI_PARAMS 覆盖）
+  const EXPANDED_W = 128; // Lt
+  const MARGIN = 20; // Mt
+  const EFFECT_SCALE_PX = 1.18; // kt
+  const CONTAINER = { black: 0.25, fade: 1, gauss: 8, strength: 0.9 };
+  const param = (key, fallback) => {
+    const p = window.SIRI_PARAMS;
+    return p && typeof p[key] === "number" ? p[key] : fallback;
+  };
+  const ballWidth = () => param("ballWidth", EXPANDED_W);
+  const effectPx = (dpr) => Math.max(1, Math.round(ballWidth() * EFFECT_SCALE_PX * dpr));
+
+  class SiriRenderer {
+    constructor(canvas) {
+      this.canvas = canvas;
+      this.gl = canvas.getContext("webgl2", { antialias: false, alpha: false, preserveDrawingBuffer: true });
+      this.passes = {};
+      this.effectTarget = null;
+      this.sceneTarget = null;
+      this.background = { texture: null, width: 1, height: 1, ready: 0 };
+      this.dpr = 1;
+      this.width = 1;
+      this.height = 1;
+      this.time = 0;
+      this.channels = null;
+    }
+
+    async init() {
+      if (!this.gl) {
+        throw new Error("WebGL2 is not available in this browser.");
+      }
+      const gl = this.gl;
+      const { vertex, fragments } = await window.SIRI_SHADERS.load();
+      for (const name in fragments) {
+        this.passes[name] = P.createProgram(gl, vertex, fragments[name]);
+      }
+      this.vao = gl.createVertexArray();
+      this.setBackground(window.SIRI_DEFAULT_BG || "./assets/96bdad248714663.69fdafdc31e48.webp");
+      this.resize();
+      window.addEventListener("resize", () => this.resize(), { passive: true });
+    }
+
+    // 加载并替换背景纹理；url 可为本地路径或 object URL（上传图片）
+    setBackground(url) {
+      const gl = this.gl;
+      const image = new Image();
+      image.crossOrigin = "anonymous";
+      image.onload = () => {
+        const texture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, gl.RGBA, gl.UNSIGNED_BYTE, image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        const old = this.background.texture;
+        this.background = { texture, width: image.width, height: image.height, ready: 1 };
+        if (old) {
+          gl.deleteTexture(old);
+        }
+        if (url.startsWith("blob:")) {
+          URL.revokeObjectURL(url);
+        }
+      };
+      image.src = url;
+    }
+
+    resize() {
+      const gl = this.gl;
+      this.dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+      const width = Math.max(1, Math.floor(this.canvas.clientWidth * this.dpr));
+      const height = Math.max(1, Math.floor(this.canvas.clientHeight * this.dpr));
+      if (this.canvas.width !== width || this.canvas.height !== height) {
+        this.canvas.width = width;
+        this.canvas.height = height;
+      }
+      this.width = width;
+      this.height = height;
+      this._ensureTargets();
+      gl.viewport(0, 0, width, height);
+    }
+
+    _layout() {
+      const press = this.channels ? this.channels.press : 0;
+      const a = 1 + press * 0.018;
+      const margin = param("margin", MARGIN) * this.dpr;
+      const inner = ballWidth() * this.dpr * a;
+      const panel = inner + margin * 2;
+      const effect = effectPx(this.dpr);
+      const cx = (this.width - panel) * 0.5;
+      const cy = (this.height - panel) * 0.5;
+      const panelCenterY = cy + panel * 0.5;
+      return {
+        margin,
+        cornerRadius: inner * 0.5,
+        panelOrigin: [cx, cy],
+        panelSize: [panel, panel],
+        effectOrigin: [(this.width - effect) * 0.5, panelCenterY - effect * 0.5],
+        effectSize: [effect, effect],
+      };
+    }
+
+    _ensureTargets() {
+      const gl = this.gl;
+      const effect = effectPx(this.dpr);
+      if (!this.effectTarget || this.effectTarget.width !== effect) {
+        P.disposeTarget(gl, this.effectTarget);
+        this.effectTarget = P.createTarget(gl, effect, effect);
+      }
+      if (!this.sceneTarget || this.sceneTarget.width !== this.width || this.sceneTarget.height !== this.height) {
+        P.disposeTarget(gl, this.sceneTarget);
+        this.sceneTarget = P.createTarget(gl, this.width, this.height);
+      }
+    }
+
+    setFrame(channels, time) {
+      this.channels = channels;
+      this.time = time;
+    }
+
+    _draw(pass, uniforms, textures) {
+      const gl = this.gl;
+      gl.useProgram(pass.program);
+      gl.bindVertexArray(this.vao);
+      P.applyUniforms(gl, pass, uniforms);
+      P.applyTextures(gl, pass, textures);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+
+    render() {
+      if (!this.channels) {
+        return;
+      }
+      const gl = this.gl;
+      this._ensureTargets();
+      const L = this._layout();
+      const u = window.SiriUniforms.build(this, L);
+
+      const bg = this.background.texture || this.sceneTarget.texture;
+
+      // 1) effect 方形 FBO：wave 或 dots
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.effectTarget.framebuffer);
+      gl.viewport(0, 0, this.effectTarget.width, this.effectTarget.height);
+      gl.disable(gl.BLEND);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      const useDots = this.channels.dotsResolved > -0.999;
+      if (useDots) {
+        this._draw(this.passes.dots, u.dots);
+      } else {
+        this._draw(this.passes.wave, u.wave);
+      }
+
+      // 2) scene 全屏 FBO：背景照片打底，再用预乘 alpha 叠「容器 + effect」
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.sceneTarget.framebuffer);
+      gl.viewport(0, 0, this.width, this.height);
+      gl.disable(gl.BLEND);
+      gl.clearColor(0, 0, 0, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      this._draw(this.passes.background, u.background, [{ name: "uBackground", texture: bg }]);
+      gl.enable(gl.BLEND);
+      gl.blendEquation(gl.FUNC_ADD);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+      this._draw(this.passes.compose, u.compose, [
+        { name: "uEffectTexture", texture: this.effectTarget.texture },
+      ]);
+      gl.disable(gl.BLEND);
+
+      // 3) 默认 framebuffer：玻璃折射 scene（含折射沙丘）+ 球外背景照片
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.viewport(0, 0, this.width, this.height);
+      this._draw(this.passes.glass, u.glass, [
+        { name: "uSceneTexture", texture: this.sceneTarget.texture },
+        { name: "uBackground", texture: bg },
+      ]);
+    }
+  }
+
+  window.SiriRenderer = SiriRenderer;
+  window.SIRI_CONTAINER = CONTAINER;
+})();

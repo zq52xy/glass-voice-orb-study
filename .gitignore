@@ -1,0 +1,16 @@
+# Local-only files
+.local/
+.playwright-mcp/
+
+# Generated diagnostics and screenshots
+diag-*.png
+eval/evidence/
+
+# Local server metadata
+*.pid
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,105 @@
+/*
+[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+INPUT: Static DOM from index.html.
+OUTPUT: Full-screen visual surface and minimal status control.
+POS: Presentation layer only; shader visuals stay in src/shaders.js.
+*/
+:root {
+  color-scheme: dark;
+  background: #080503;
+  --text: rgba(255, 255, 255, 0.82);
+  --text-active: rgba(255, 255, 255, 0.94);
+  --shadow: rgba(0, 0, 0, 0.58);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #080503;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100svh;
+}
+
+.siri-page {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  background: #080503;
+}
+
+.siri-canvas {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100vw;
+  height: 100svh;
+  background: #080503;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.siri-control {
+  position: fixed;
+  left: 50%;
+  bottom: max(28px, env(safe-area-inset-bottom));
+  z-index: 2;
+  min-width: 9.5rem;
+  margin: 0;
+  padding: 0.42rem 0.7rem;
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font: 500 15px/1 system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 0 1px 12px var(--shadow);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.siri-control:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 8px;
+}
+
+.siri-control[data-active="true"] {
+  color: var(--text-active);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 520px) {
+  .siri-control {
+    bottom: max(22px, env(safe-area-inset-bottom));
+    min-width: 8.5rem;
+    font-size: 14px;
+  }
+}
