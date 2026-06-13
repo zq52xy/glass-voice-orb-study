@@ -74,3 +74,23 @@ Deploy the published static WebGL app through GitHub Pages from the `main` branc
 - Browser console has no WebGL feedback-loop warnings on page load.
 - Preview media exists under `docs/media/` and does not include local-only evidence artifacts.
 - Evidence report records the URL and final status.
+
+## z1han Target Alignment Addendum
+
+### Work Target
+
+Align the local glass-orb look and interaction chrome toward `https://www.z1han.com/shader/siriai` without copying its source code or wallpaper assets.
+
+### Transfer Constraints
+
+- Keep only one authorized public background image; do not import target-page wallpapers.
+- Move public chrome closer to the target: subtle top backdrop dots, bottom translucent hint pill, no visible tuning panel by default.
+- Tune the orb toward transparent liquid glass: softer container, stronger refraction, thin edge highlight, cyan/purple/pink/warm wave band.
+- Preserve the existing idle/listening/thinking state model and the current user-provided transition smoothing.
+
+### Gates
+
+- Target reference screenshots exist under `eval/evidence/z1han-target/`.
+- README media is regenerated from the current app after tuning.
+- Browser capture report has no console warnings.
+- `src/*.js` files remain within the project line-count limit.

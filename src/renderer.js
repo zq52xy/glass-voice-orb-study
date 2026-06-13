@@ -12,7 +12,7 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
   const EXPANDED_W = 128; // Lt
   const MARGIN = 20; // Mt
   const EFFECT_SCALE_PX = 1.18; // kt
-  const CONTAINER = { black: 0.25, fade: 1, gauss: 8, strength: 0.9 };
+  const CONTAINER = { black: 0.18, fade: 1.38, gauss: 4.1, strength: 0.54 };
   const param = (key, fallback) => {
     const p = window.SIRI_PARAMS;
     return p && typeof p[key] === "number" ? p[key] : fallback;
@@ -34,11 +34,8 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([16, 14, 12, 255]));
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      this.dpr = 1;
-      this.width = 1;
-      this.height = 1;
-      this.time = 0;
-      this.channels = null;
+      this.dpr = 1; this.width = 1; this.height = 1;
+      this.time = 0; this.channels = null;
     }
 
     async init() {
@@ -56,7 +53,6 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
       window.addEventListener("resize", () => this.resize(), { passive: true });
     }
 
-    // 加载并替换背景纹理；url 可为本地路径或 object URL（上传图片）
     setBackground(url) {
       const gl = this.gl;
       const image = new Image();
@@ -144,6 +140,17 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
 
+    _premultBlend(on) {
+      const gl = this.gl;
+      if (!on) {
+        gl.disable(gl.BLEND);
+        return;
+      }
+      gl.enable(gl.BLEND);
+      gl.blendEquation(gl.FUNC_ADD);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    }
+
     render() {
       if (!this.channels) {
         return;
@@ -155,35 +162,31 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
 
       const bg = this.background.texture || this.fallbackTexture;
 
-      // 1) effect 方形 FBO：wave 或 dots
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.effectTarget.framebuffer);
       gl.viewport(0, 0, this.effectTarget.width, this.effectTarget.height);
-      gl.disable(gl.BLEND);
+      this._premultBlend(false);
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
-      const useDots = this.channels.dotsResolved > -0.999;
-      if (useDots) {
-        this._draw(this.passes.dots, u.dots);
-      } else {
+      this._premultBlend(true);
+      if (this.channels.waveLayerOpacity > 0.001) {
         this._draw(this.passes.wave, u.wave);
       }
+      if (this.channels.dotsAppear > 0.001) {
+        this._draw(this.passes.dots, u.dots);
+      }
+      this._premultBlend(false);
 
-      // 2) scene 全屏 FBO：背景照片打底，再用预乘 alpha 叠「容器 + effect」
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.sceneTarget.framebuffer);
       gl.viewport(0, 0, this.width, this.height);
-      gl.disable(gl.BLEND);
       gl.clearColor(0, 0, 0, 1);
       gl.clear(gl.COLOR_BUFFER_BIT);
       this._draw(this.passes.background, u.background, [{ name: "uBackground", texture: bg }]);
-      gl.enable(gl.BLEND);
-      gl.blendEquation(gl.FUNC_ADD);
-      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+      this._premultBlend(true);
       this._draw(this.passes.compose, u.compose, [
         { name: "uEffectTexture", texture: this.effectTarget.texture },
       ]);
-      gl.disable(gl.BLEND);
+      this._premultBlend(false);
 
-      // 3) 默认 framebuffer：玻璃折射 scene（含折射沙丘）+ 球外背景照片
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
       gl.viewport(0, 0, this.width, this.height);
       this._draw(this.passes.glass, u.glass, [

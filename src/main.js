@@ -11,6 +11,7 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
   const renderer = new window.SiriRenderer(canvas);
   window.SIRI_RENDERER = renderer; // 供背景切换器调用 setBackground
   const state = new window.SiriState();
+  window.SIRI_STATE = state; // 暴露状态机：便于脚本化触发/调试状态过渡
   const meter = new window.SiriAudioMeter();
   let releaseTimer = 0;
   let lastFrame = performance.now();

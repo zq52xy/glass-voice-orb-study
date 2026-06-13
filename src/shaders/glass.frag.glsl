@@ -169,7 +169,10 @@ vec4 glassFragment(vec2 pixel) {
 	// glass = refraction + highlight ONLY — no face color (no saturation/black/luma/tint),
 	// so it looks like untouched glass over whatever is behind it.
 	vec3 col = sampleScene(rUv);
-	col += vec3(highlightBand(d, grad) * uHlAmount);
+	float h = highlightBand(d, grad) * uHlAmount;
+	vec3 coolRim = vec3(0.68, 0.95, 1.0);
+	vec3 warmRim = vec3(1.0, 0.58, 0.92);
+	col += mix(coolRim, warmRim, smoothstep(0.2, 0.9, panelUv.y)) * h;
 	return vec4(col, alpha);
 }
 

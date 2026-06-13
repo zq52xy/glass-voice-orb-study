@@ -151,7 +151,33 @@ Pass.
   - `docs/media/desktop-listening.png` (1280x720)
   - `docs/media/desktop-thinking.png` (1280x720)
   - `docs/media/mobile-idle.png` (780x1688)
-- GIF output: `docs/media/orb-demo.gif` (360x360, 52 frames, 222215 bytes).
+- GIF output: `docs/media/orb-demo.gif` (360x360, 52 frames, 208716 bytes).
 - Capture report from the successful pass had no console warnings; the transient report file was not kept in public media.
 - Updated `README.md` with the GIF, desktop state table, and mobile preview image.
 - Final status: ready for GitHub README and Pages.
+
+## z1han Visual Target Alignment
+
+- Visual target inspected: https://www.z1han.com/shader/siriai
+- Target screenshots captured locally under `eval/evidence/z1han-target/`:
+  - `target-desktop-idle.png`
+  - `target-desktop-hold.png`
+  - `target-desktop-release.png`
+  - `target-mobile-idle.png`
+- Applied transfer constraints, not source-code copying:
+  - public tuner hidden unless `?tuner=1`;
+  - background selector restyled as subtle top dots;
+  - bottom prompt restyled as a translucent pill;
+  - wave palette shifted toward cyan, purple, pink, and warm white;
+  - wave softness/intensity and glass refraction/highlight tuned toward the reference;
+  - container darkening reduced for a more transparent liquid-glass sphere.
+- Preserved existing local state-machine changes: exposed `window.SIRI_STATE`, cross-faded wave/dots, and held `sharedResolved = 1` to avoid transition flicker.
+- Regenerated README media after tuning:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 208716 bytes)
+- Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
+- JS line-count check: every `src/*.js` file is <= 200 lines; `src/renderer.js` is exactly 200 lines.
+- Final status: first-pass alignment complete; remaining visual difference is mainly the authorized dark personal background versus the target page's bright Tahoe-style wallpaper.

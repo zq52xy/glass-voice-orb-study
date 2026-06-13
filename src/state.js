@@ -135,13 +135,15 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
       const dots = this.fluidDots.step(dt);
       const scale = this.effectScale.step(dt);
       const press = this.press.step(dt);
-      const waveResolved = wave * 2 - 1;
       const d = this.derived;
       d.waveOpacity = wave;
       d.waveLayerOpacity = 0.98 * Math.min(1, Math.max(0, wave));
       d.dotsResolved = dots;
       d.effectScale = scale;
-      d.sharedResolved = Math.max(waveResolved, dots, 0);
+      // orb 在 idle/listening/thinking 三态恒显，容器/wave 的 resolved 维持为 1。
+      // 旧式 max(waveResolved, dots, 0) 会在状态切换中段两信号同时过零而塌到 0，
+      // 造成暗容器中途变亮再变暗的闪烁 —— 这里恒定为 1 以保证衔接平滑。
+      d.sharedResolved = 1;
       d.dotsAppear = Math.max(0, Math.min(1, dots));
       d.press = press;
       return d;

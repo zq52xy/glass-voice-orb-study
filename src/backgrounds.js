@@ -14,18 +14,17 @@ POS: Background-switching feature; reads window.SIRI_RENDERER, owns no GL state.
   window.SIRI_DEFAULT_BG = DIR + LIST[0].file;
 
   const CSS = `
-  #siri-bg{position:fixed;left:12px;bottom:14px;z-index:8;display:flex;gap:8px;align-items:center;
-    padding:8px;background:rgba(14,12,10,.62);backdrop-filter:blur(12px);border-radius:12px;
-    border:1px solid rgba(255,255,255,.1);user-select:none}
-  #siri-bg .thumb{width:46px;height:46px;border-radius:8px;background-size:cover;
-    background-position:center;cursor:pointer;border:2px solid transparent;opacity:.7;
-    transition:opacity .15s,border-color .15s}
+  #siri-bg{position:fixed;left:50%;top:22px;z-index:8;display:flex;gap:10px;align-items:center;
+    transform:translateX(-50%);padding:7px 9px;background:transparent;border:0;user-select:none}
+  #siri-bg .thumb{width:9px;height:9px;border-radius:999px;background-size:cover;background-position:center;
+    cursor:pointer;border:0;opacity:.55;box-shadow:0 0 0 1px rgba(255,255,255,.35);
+    transition:opacity .15s,transform .15s,box-shadow .15s}
   #siri-bg .thumb:hover{opacity:1}
-  #siri-bg .thumb.active{opacity:1;border-color:#c7a06a}
-  #siri-bg .upload{width:46px;height:46px;border-radius:8px;border:1.5px dashed rgba(255,255,255,.3);
-    color:#ddd;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;
-    background:rgba(255,255,255,.04)}
-  #siri-bg .upload:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+  #siri-bg .thumb.active{opacity:1;transform:scale(1.18);box-shadow:0 0 0 2px rgba(255,255,255,.48)}
+  #siri-bg .upload{width:9px;height:9px;border-radius:999px;border:0;color:transparent;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0;
+    background:rgba(255,255,255,.38);box-shadow:0 0 0 1px rgba(255,255,255,.28)}
+  #siri-bg .upload:hover{background:rgba(255,255,255,.72)}
   #siri-bg input[type=file]{display:none}`;
 
   function build() {
