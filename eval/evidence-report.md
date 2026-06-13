@@ -121,3 +121,14 @@ Pass.
 - Default branch verified: `main`.
 - Remote `main` initially verified at `1b43a007072fce5e97eaa83a8b78c89863d0df2c`.
 - Final status: published.
+
+## GitHub Pages Deployment
+
+- Added `.nojekyll` at the repository root for GitHub Pages static serving.
+- Updated `README.md` with the public online demo URL.
+- Updated `eval/work-contract.md` with the GitHub Pages deployment addendum.
+- Configured GitHub Pages source through GitHub API: `main` branch, `/` root.
+- GitHub Pages API reported `status: built`, `https_enforced: true`.
+- Published URL: https://zq52xy.github.io/glass-voice-orb-study/
+- HTTP checks returned 200 for the homepage, `src/main.js`, `src/shaders/glass.frag.glsl`, and the public background `.webp`.
+- Final status: deployed.
