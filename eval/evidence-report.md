@@ -237,6 +237,35 @@ Pass.
 - Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - Final status: pass.
 
+## Background Presets And Dialog Polish
+
+- Restored two older personal background presets from `.local/open-source-excluded/assets/` into `assets/`:
+  - `assets/0808bb244676405.699d0d0469a67.webp`
+  - `assets/4d53de244676405.699d0d046c4dc.webp`
+- Updated `src/backgrounds.js` to expose three public personal presets plus upload.
+- Added orb breathing scale via renderer layout, with `breathAmount` and `breathSpeed` exposed in the tuning panel.
+- Increased dialog spring dynamics by lowering dialog damping and allowing slight visual overshoot.
+- Updated ask container styling toward the supplied reference image:
+  - left gradient glowing caret;
+  - right microphone line icon;
+  - dialog opacity breathing;
+  - transparent native caret so the custom glow carries the cursor signal.
+- Bumped script cache query values to `v=19`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v19-idle-bg-presets.png`
+  - `eval/evidence/siri-v19-ask-polish.png`
+  - `eval/evidence/siri-v19-reply-polish.png`
+- Runtime check confirmed default background `雪街`, three thumbnail presets, upload input, background texture ready, orb breathing panel-size delta, ask dialog focus, gradient glow caret, mic icon, transparent native caret, reply flow, and no console warnings in media capture.
+- Regenerated README media:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 200388 bytes)
+- Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
+- Updated README/NOTICE/docs wording from singular background asset to plural background presets while preserving non-commercial/no-standalone-reuse restrictions.
+- Final status: pass.
+
 ## Target Phase And Glass Highlight Follow-Up
 
 - Continued direct source comparison against the target frontend modules.

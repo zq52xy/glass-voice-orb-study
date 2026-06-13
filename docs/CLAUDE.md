@@ -12,6 +12,5 @@ Public-facing documentation and preview media for the GitHub repository and GitH
 ## Boundaries
 
 - Keep generated QA artifacts under `eval/evidence/`; only publish curated preview assets in `docs/media/`.
-- Preview assets must not add new personal background images beyond the single authorized public preset.
+- Preview assets may use authorized personal background presets, but must not add target-page wallpapers or unreviewed third-party assets.
 - README media should be compact enough for GitHub rendering and must reflect the current deployed app.
-

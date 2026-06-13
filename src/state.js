@@ -93,7 +93,7 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
     thinking: { waveActive: false, fluidDots: true },
     dialog: { waveActive: false, fluidDots: false },
   };
-  const DIALOG = { response: 0.5, dampingRatio: 0.8 };
+  const DIALOG = { response: 0.42, dampingRatio: 0.62 };
   const WAVE_PHASE_WRAP = 62.831848;
   const WAVE_SPEED_BASE = -2.5;
   const WAVE_SPEED_AUDIO = -12;

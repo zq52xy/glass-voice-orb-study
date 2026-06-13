@@ -21,7 +21,7 @@ Do not remove relevant attribution if distributing this repository or derivative
 
 ## Asset Notice / 资产声明
 
-The included background image in `assets/` is a personal demo asset supplied by the repository owner. It is included only so the local demo can run. It is not licensed for reuse, resale, redistribution as a standalone asset, or commercial use.
+The included background images in `assets/` are personal demo assets supplied by the repository owner. They are included only so the local demo can run. They are not licensed for reuse, resale, redistribution as standalone assets, or commercial use.
 
 `assets/` 中包含的背景图是仓库所有者提供的个人演示资产，仅用于保证本地 demo 可运行。不授权复用、转售、作为独立资产再分发，或用于商业用途。
 

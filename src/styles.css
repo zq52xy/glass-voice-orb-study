@@ -66,6 +66,7 @@ body {
   place-items: center;
   padding: 0 10px;
   pointer-events: none;
+  animation: dialog-opacity-breathe 2.8s ease-in-out infinite;
 }
 
 .siri-ask,
@@ -80,6 +81,54 @@ body {
   text-shadow: 0 1px 7px rgba(0, 0, 0, 0.42);
   font: 400 17px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
   letter-spacing: 0;
+}
+
+.siri-ask {
+  position: relative;
+  padding: 0 54px 0 25px;
+}
+
+.siri-ask::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 36px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  background: linear-gradient(180deg, #fff6a8 0%, #fff 38%, #74f3ff 62%, #665cff 100%);
+  box-shadow:
+    0 0 8px rgba(255, 236, 156, 0.9),
+    0 0 14px rgba(93, 230, 255, 0.85),
+    0 0 22px rgba(118, 94, 255, 0.7);
+  opacity: 0;
+  animation: caret-glow 1.45s ease-in-out infinite;
+}
+
+.siri-dialog[data-mode="ask"] .siri-ask::before {
+  opacity: 1;
+}
+
+.siri-mic {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.58);
+  filter: drop-shadow(0 1px 8px rgba(255, 255, 255, 0.12));
+}
+
+.siri-mic svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.85;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .siri-dialog[data-mode="ask"],
@@ -102,9 +151,9 @@ body {
   outline: 0;
   background: transparent;
   color: inherit;
-  caret-color: #fff;
   font: inherit;
   text-align: left;
+  caret-color: transparent;
 }
 
 .siri-ask input::placeholder {
@@ -112,9 +161,26 @@ body {
 }
 
 .siri-answer {
+  padding: 0 30px;
   max-height: 104px;
   overflow: hidden;
   white-space: pre-wrap;
+}
+
+@keyframes caret-glow {
+  0%, 100% {
+    opacity: 0.45;
+    transform: translateY(-50%) scaleY(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scaleY(1.08);
+  }
+}
+
+@keyframes dialog-opacity-breathe {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 1; }
 }
 
 .siri-control {

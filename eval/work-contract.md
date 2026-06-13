@@ -2,7 +2,7 @@
 
 ## Work Target
 
-Prepare the project for non-commercial public release by keeping a single authorized background preset and excluding local-only assets.
+Prepare the project for non-commercial public release with authorized personal background presets and no target-page wallpaper assets.
 
 ## Parent Contract
 
@@ -10,14 +10,14 @@ Prepare the project for non-commercial public release by keeping a single author
 
 ## Core User Paths
 
-1. Load the page and see the single public preset background with the centered glass sphere.
-2. Confirm the bottom-left background picker exposes only the public preset plus upload control.
+1. Load the page and see an authorized public preset background with the centered glass sphere.
+2. Confirm the bottom-left background picker exposes the restored public presets plus upload control.
 3. Press and release to verify listening/thinking states still work after the preset update.
 
 ## Done Definition
 
-- `src/backgrounds.js` references only the single public preset file.
-- Extra personal background images are excluded from the future GitHub tree.
+- `src/backgrounds.js` references only authorized personal preset files.
+- Target-page wallpaper assets are excluded from the future GitHub tree.
 - Script cache query values are bumped so the in-app browser gets the latest preset manifest.
 - Desktop and mobile screenshots are refreshed.
 - Evidence report records the background preset update and checks.
@@ -83,7 +83,7 @@ Align the local glass-orb look and interaction chrome toward `https://www.z1han.
 
 ### Transfer Constraints
 
-- Keep only one authorized public background image; do not import target-page wallpapers.
+- Keep only authorized personal background presets; do not import target-page wallpapers.
 - Keep the background picker as the bottom-left thumbnail + upload control; only the orb effect and bottom hint pill are aligned toward the target.
 - Keep the tuning panel exposed by default while effect alignment is still being reviewed; allow `?tuner=0` for clean captures.
 - Tune the orb toward transparent liquid glass: softer container, stronger refraction, thin edge highlight, cyan/purple/pink/warm wave band.

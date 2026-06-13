@@ -23,7 +23,7 @@ This project is a non-commercial WebGL study of a liquid-glass voice orb. A tran
 
 - Public distribution is non-commercial study only.
 - Keep attribution and restrictions in `NOTICE.md` and `LICENSE`.
-- Root Git metadata keeps local-only assets ignored and text files normalized to LF.
+- Root Git metadata keeps local-only scratch assets ignored and text files normalized to LF.
 - Public web deployment uses GitHub Pages from `main` branch `/`; `.nojekyll` disables Jekyll processing.
 
 ## Quality Gates

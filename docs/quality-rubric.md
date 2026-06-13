@@ -2,7 +2,7 @@
 
 ## Target
 
-Keep the public repository documentation accurate for a non-commercial, source-available study. Documentation must not imply commercial permission, official affiliation, hidden provenance, or reusable rights for the included personal background asset.
+Keep the public repository documentation accurate for a non-commercial, source-available study. Documentation must not imply commercial permission, official affiliation, hidden provenance, or reusable rights for the included personal background assets.
 
 Public-facing release documents should be bilingual in English and Chinese when they explain repository purpose, attribution, asset rights, and license restrictions.
 
@@ -29,7 +29,7 @@ Readers who inspect or fork the project on GitHub, including developers studying
 - Do not describe the project as OSI open source while the license is source-available and non-commercial.
 - Keep Shadertoy provenance visible when shader attribution is discussed.
 - Keep any additional public reference attribution that is still represented by copied, ported, or adapted code.
-- State that the included background image is a personal demo asset and not licensed for standalone reuse or commercial use.
+- State that the included background images are personal demo assets and not licensed for standalone reuse or commercial use.
 - Do not imply affiliation with Apple, Siri, Shadertoy, or any referenced author.
 - Keep bilingual statements semantically aligned; do not let the Chinese text loosen the English license, or the English text omit Chinese-facing restrictions.
 

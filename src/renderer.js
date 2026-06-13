@@ -91,8 +91,10 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
 
     _layout() {
       const press = this.channels ? this.channels.press : 0;
-      const dialog = Math.max(0, Math.min(1, this.channels ? this.channels.dialog || 0 : 0));
-      const a = 1 + press * 0.018;
+      const rawDialog = this.channels ? this.channels.dialog || 0 : 0;
+      const dialog = Math.max(0, Math.min(1.08, rawDialog));
+      const breathe = Math.sin(this.time * param("breathSpeed", 1.65)) * param("breathAmount", 0.028) * (1 - Math.min(1, dialog));
+      const a = 1 + press * 0.018 + breathe;
       const margin = param("margin", MARGIN) * this.dpr;
       const base = ballWidth() * this.dpr * a;
       const dw = Math.min(param("dialogWidth", DIALOG_W) * this.dpr, this.width - 48 * this.dpr);
