@@ -58,8 +58,9 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
     const now = performance.now();
     const dt = Math.min(0.05, (now - lastFrame) / 1000);
     lastFrame = now;
-    const channels = state.step(dt);
-    channels.audio = meter.sample();
+    const audio = meter.sample();
+    const channels = state.step(dt, audio);
+    channels.audio = audio;
     renderer.setFrame(channels, (now - startTime) / 1000);
     renderer.render();
     requestAnimationFrame(frame);

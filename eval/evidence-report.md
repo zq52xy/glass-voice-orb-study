@@ -210,3 +210,23 @@ Pass.
   - `docs/media/orb-demo.gif` (360x360, 52 frames, 229592 bytes)
 - Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - Final status: pass.
+
+## Target Phase And Glass Highlight Follow-Up
+
+- Continued direct source comparison against the target frontend modules.
+- Found two remaining effect-code deltas:
+  - target `state.js` advances `wavePhase` from state using base speed `-2.5` and audio drive up to `-12`;
+  - target `glass-composite.frag.glsl` uses pure white rim highlight, while the local version still had an added cyan/pink rim tint.
+- Updated local `state.js`, `main.js`, and `uniforms.js` so wave phase is state/audio-driven instead of raw render time.
+- Updated `src/shaders/glass.frag.glsl` to remove the local colored rim and use the target-style white highlight only.
+- Bumped script cache query values to `v=17`.
+- Runtime verification wrote `eval/evidence/siri-v17-phase-glass.png`.
+- Runtime check confirmed idle mode, default-visible tuner, bottom-left background picker, upload control, changing `wavePhase`, and no console warnings/errors.
+- Regenerated README media with `?tuner=0&v=17` clean capture:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 256718 bytes)
+- Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
+- Final status: pass.

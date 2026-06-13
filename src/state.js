@@ -92,6 +92,18 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
     listening: { waveActive: true, fluidDots: false },
     thinking: { waveActive: false, fluidDots: true },
   };
+  const WAVE_PHASE_WRAP = 62.831848;
+  const WAVE_SPEED_BASE = -2.5;
+  const WAVE_SPEED_AUDIO = -12;
+  const AUDIO_DRIVE_SCALE = 0.4;
+
+  function audioDrive(bands) {
+    if (!bands) {
+      return 0;
+    }
+    const peak = Math.max(bands.low || 0, bands.mid || 0, bands.high || 0);
+    return Math.max(0, Math.min(1, peak * AUDIO_DRIVE_SCALE));
+  }
 
   class SiriState {
     constructor() {
@@ -103,6 +115,7 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
       this.derived = {
         waveOpacity: 1,
         waveLayerOpacity: 0.98,
+        wavePhase: 0,
         dotsResolved: -1,
         effectScale: 1,
         sharedResolved: 1,
@@ -130,7 +143,7 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
       this.press.setTarget(pressed ? 1 : 0);
     }
 
-    step(dt) {
+    step(dt, bands) {
       const wave = this.waveOpacity.step(dt);
       const dots = this.fluidDots.step(dt);
       const scale = this.effectScale.step(dt);
@@ -140,6 +153,10 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
       d.waveLayerOpacity = 0.98 * Math.min(1, Math.max(0, wave));
       d.dotsResolved = dots;
       d.effectScale = scale;
+      d.wavePhase = (d.wavePhase + (WAVE_SPEED_BASE + WAVE_SPEED_AUDIO * audioDrive(bands)) * dt) % WAVE_PHASE_WRAP;
+      if (d.wavePhase < 0) {
+        d.wavePhase += WAVE_PHASE_WRAP;
+      }
       // orb 在 idle/listening/thinking 三态恒显，容器/wave 的 resolved 维持为 1。
       // 旧式 max(waveResolved, dots, 0) 会在状态切换中段两信号同时过零而塌到 0，
       // 造成暗容器中途变亮再变暗的闪烁 —— 这里恒定为 1 以保证衔接平滑。

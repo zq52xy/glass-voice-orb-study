@@ -34,7 +34,7 @@ POS: Pure uniform dictionary; no GL calls, no animation, no state transitions.
       uAmplitude: num("waveAmplitude", 0.22),
       uFreq: 1.1,
       uAberrationFreq: 1,
-      uWavePhase: r.time,
+      uWavePhase: ch.wavePhase,
       uWaveSpeed: -1,
       uWaveScale: num("waveScale", 0.9),
       uAberration: num("waveAberration", 2.6),
