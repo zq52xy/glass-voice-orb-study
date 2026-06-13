@@ -28,6 +28,12 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
       this.effectTarget = null;
       this.sceneTarget = null;
       this.background = { texture: null, width: 1, height: 1, ready: 0 };
+      const gl = this.gl;
+      this.fallbackTexture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, this.fallbackTexture);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([16, 14, 12, 255]));
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
       this.dpr = 1;
       this.width = 1;
       this.height = 1;
@@ -147,7 +153,7 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
       const L = this._layout();
       const u = window.SiriUniforms.build(this, L);
 
-      const bg = this.background.texture || this.sceneTarget.texture;
+      const bg = this.background.texture || this.fallbackTexture;
 
       // 1) effect 方形 FBO：wave 或 dots
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.effectTarget.framebuffer);

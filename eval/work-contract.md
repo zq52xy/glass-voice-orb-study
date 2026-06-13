@@ -64,9 +64,11 @@ Deploy the published static WebGL app through GitHub Pages from the `main` branc
 - `.nojekyll` exists at the repository root so GitHub Pages does not run Jekyll processing.
 - README includes the public Pages URL.
 - Published URL loads `index.html` and the relative `src/` and `assets/` resources.
+- Published render avoids framebuffer/texture feedback-loop warnings during initial background loading.
 
 ### Gates
 
 - GitHub Pages API reports a configured site URL.
 - Published URL responds with the public README/site shell after deployment.
+- Browser console has no WebGL feedback-loop warnings on page load.
 - Evidence report records the URL and final status.
