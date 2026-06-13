@@ -142,3 +142,16 @@ Pass.
 - Updated `eval/work-contract.md` to require no feedback-loop warnings on GitHub Pages load.
 - Verified Pages rebuilt successfully and `https://zq52xy.github.io/glass-voice-orb-study/?v=10` opened with no new console warning output.
 - Final status: deployed and warning-free on page load.
+
+## README Preview Media
+
+- Generated public preview assets under `docs/media/` from the running local app using Playwright and Pillow/ffmpeg.
+- Screenshot outputs:
+  - `docs/media/desktop-idle.png` (1280x720)
+  - `docs/media/desktop-listening.png` (1280x720)
+  - `docs/media/desktop-thinking.png` (1280x720)
+  - `docs/media/mobile-idle.png` (780x1688)
+- GIF output: `docs/media/orb-demo.gif` (360x360, 52 frames, 222215 bytes).
+- Capture report from the successful pass had no console warnings; the transient report file was not kept in public media.
+- Updated `README.md` with the GIF, desktop state table, and mobile preview image.
+- Final status: ready for GitHub README and Pages.

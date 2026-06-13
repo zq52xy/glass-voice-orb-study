@@ -32,6 +32,28 @@ Open:
 http://127.0.0.1:4173/
 ```
 
+## Preview / 预览
+
+Interaction demo:
+
+交互动图：
+
+![Glass voice orb interaction demo](./docs/media/orb-demo.gif)
+
+Desktop states:
+
+桌面状态：
+
+| Idle / 待机 | Listening / 聆听 | Thinking / 思考 |
+| --- | --- | --- |
+| ![Desktop idle glass orb](./docs/media/desktop-idle.png) | ![Desktop listening wave](./docs/media/desktop-listening.png) | ![Desktop thinking dots](./docs/media/desktop-thinking.png) |
+
+Mobile:
+
+移动端：
+
+<img src="./docs/media/mobile-idle.png" width="280" alt="Mobile idle glass voice orb preview" />
+
 ## Features / 功能
 
 - WebGL2 multi-pass glass rendering.

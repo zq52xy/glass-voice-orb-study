@@ -65,10 +65,12 @@ Deploy the published static WebGL app through GitHub Pages from the `main` branc
 - README includes the public Pages URL.
 - Published URL loads `index.html` and the relative `src/` and `assets/` resources.
 - Published render avoids framebuffer/texture feedback-loop warnings during initial background loading.
+- README includes curated public screenshots and a compact GIF generated from the running app.
 
 ### Gates
 
 - GitHub Pages API reports a configured site URL.
 - Published URL responds with the public README/site shell after deployment.
 - Browser console has no WebGL feedback-loop warnings on page load.
+- Preview media exists under `docs/media/` and does not include local-only evidence artifacts.
 - Evidence report records the URL and final status.
