@@ -10,21 +10,21 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
     {
       title: "容器（下半透明渐变）",
       items: [
-        { key: "containerStrength", label: "整体暗度", min: 0, max: 1, step: 0.01, def: 0.54 },
-        { key: "containerBlack", label: "顶部纯黑高度", min: 0, max: 0.6, step: 0.01, def: 0.18 },
-        { key: "containerFade", label: "渐隐跨度", min: 0.1, max: 2, step: 0.01, def: 1.38 },
-        { key: "containerGauss", label: "渐隐陡度", min: 1, max: 16, step: 0.1, def: 4.1 },
+        { key: "containerStrength", label: "整体暗度", min: 0, max: 1, step: 0.01, def: 0.9 },
+        { key: "containerBlack", label: "顶部纯黑高度", min: 0, max: 0.6, step: 0.01, def: 0.25 },
+        { key: "containerFade", label: "渐隐跨度", min: 0.1, max: 2, step: 0.01, def: 1 },
+        { key: "containerGauss", label: "渐隐陡度", min: 1, max: 16, step: 0.1, def: 8 },
       ],
     },
     {
       title: "玻璃",
       items: [
-        { key: "refractAmount", label: "折射强度", min: -120, max: 0, step: 1, def: -70 },
-        { key: "glassHeight", label: "折射深度", min: 4, max: 40, step: 1, def: 24 },
+        { key: "refractAmount", label: "折射强度", min: -120, max: 0, step: 1, def: -56 },
+        { key: "glassHeight", label: "折射深度", min: 4, max: 40, step: 1, def: 18 },
         { key: "curvature", label: "曲率", min: 0, max: 1, step: 0.01, def: 1 },
-        { key: "hlAmount", label: "高光亮度", min: 0, max: 2, step: 0.01, def: 0.78 },
-        { key: "hlHeight", label: "高光宽度", min: 0.5, max: 6, step: 0.1, def: 2.3 },
-        { key: "hlCut", label: "高光收束", min: 0, max: 0.95, step: 0.01, def: 0.42 },
+        { key: "hlAmount", label: "高光亮度", min: 0, max: 2, step: 0.01, def: 0.72 },
+        { key: "hlHeight", label: "高光宽度", min: 0.5, max: 6, step: 0.1, def: 2.2 },
+        { key: "hlCut", label: "高光收束", min: 0, max: 0.95, step: 0.01, def: 0.52 },
       ],
     },
     {
@@ -37,8 +37,15 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
     {
       title: "光效",
       items: [
-        { key: "waveIntensity", label: "波形亮度", min: 1, max: 16, step: 0.1, def: 11.5 },
-        { key: "waveAberration", label: "波形色散", min: 0, max: 1.5, step: 0.01, def: 0.95 },
+        { key: "waveAmplitude", label: "波形振幅", min: 0.05, max: 0.5, step: 0.01, def: 0.22 },
+        { key: "waveScale", label: "波形尺寸", min: 0.4, max: 1.4, step: 0.01, def: 0.9 },
+        { key: "waveAberration", label: "波形色散", min: 0, max: 4, step: 0.01, def: 2.6 },
+        { key: "waveThickness", label: "波形线宽", min: 1, max: 12, step: 0.1, def: 3 },
+        { key: "waveIntensity", label: "波形亮度", min: 0.5, max: 16, step: 0.1, def: 2 },
+        { key: "waveBandFill", label: "波形填光", min: 0, max: 50000, step: 100, def: 30000 },
+        { key: "waveBandFillThickness", label: "填光厚度", min: 0, max: 0.3, step: 0.01, def: 0.08 },
+        { key: "waveSoftness", label: "柔化", min: 0, max: 8, step: 0.1, def: 2.5 },
+        { key: "waveWhiteClip", label: "白色 Bloom", min: 0, max: 1, step: 0.01, def: 1 },
         { key: "dotGlow", label: "点辉光", min: 0.01, max: 0.15, step: 0.005, def: 0.055 },
       ],
     },
@@ -48,7 +55,7 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
   GROUPS.forEach((g) => g.items.forEach((it) => (params[it.key] = it.def)));
   window.SIRI_PARAMS = params;
 
-  const showTuner = new URLSearchParams(window.location.search).get("tuner") === "1";
+  const showTuner = new URLSearchParams(window.location.search).get("tuner") !== "0";
 
   const CSS = `
   #siri-tuner{position:fixed;top:12px;right:12px;z-index:9;width:248px;max-height:88vh;

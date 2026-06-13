@@ -8,7 +8,7 @@
 - `state.js`: spring state machine (idle/listening/thinking) ported from siri27; derives channels.
 - `renderer.js`: owns the effect->scene->glass draw order, layout, background image, and resize.
 - `backgrounds.js`: owns the selectable background preset manifest, picker UI, and upload path.
-- `tuner.js`: optional in-browser tuning panel for visual parameters.
+- `tuner.js`: default-visible in-browser tuning panel for visual parameters; hide with `?tuner=0`.
 - `audio.js`: microphone permission, FFT low/mid/high band split, and demo fallback.
 - `main.js`: gesture wiring, frame loop, and renderer/state/audio coordination.
 - `styles.css`: page layout, full-screen canvas, bottom status control, accessibility states.

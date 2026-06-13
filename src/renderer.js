@@ -12,7 +12,7 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
   const EXPANDED_W = 128; // Lt
   const MARGIN = 20; // Mt
   const EFFECT_SCALE_PX = 1.18; // kt
-  const CONTAINER = { black: 0.18, fade: 1.38, gauss: 4.1, strength: 0.54 };
+  const CONTAINER = { black: 0.25, fade: 1, gauss: 8, strength: 0.9 };
   const param = (key, fallback) => {
     const p = window.SIRI_PARAMS;
     return p && typeof p[key] === "number" ? p[key] : fallback;

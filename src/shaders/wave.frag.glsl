@@ -37,6 +37,7 @@ uniform float uMidBandFill;
 uniform float uMidSoftness;
 uniform float uHighAberration;
 uniform float uHighAberrationAmplitude;
+uniform float uWhiteClip;
 
 out vec4 outColor;
 
@@ -46,13 +47,6 @@ float saturate(float value) {
 
 vec3 spectrumTri(float t) {
 	return clamp(vec3(abs(t - 3.0) - 1.0, 2.0 - abs(t - 2.0), 2.0 - abs(t - 4.0)), 0.0, 1.0);
-}
-
-vec3 targetPalette(float t) {
-	if (t < 0.5) return vec3(0.22, 0.96, 1.0);
-	if (t < 1.5) return vec3(0.36, 0.30, 1.0);
-	if (t < 2.5) return vec3(1.0, 0.22, 0.92);
-	return vec3(1.0, 0.92, 0.58);
 }
 
 float smoothUnit(float value) {
@@ -114,7 +108,7 @@ void main() {
 	for (int i = 0; i < 4; i += 1) {
 		float fi = float(i);
 		float t13 = fi * 0.33333334;
-		vec3 hue = mix(vec3(1.0), targetPalette(fi), vec3(res));
+		vec3 hue = mix(vec3(1.0), spectrumTri(fi), vec3(res));
 		wSum += hue;
 		float ph = atArg2 + mix(negBase, c73, t13);
 		float w2 = env68 * sin(ph) + mouseLift;
@@ -135,7 +129,7 @@ void main() {
 	float kC = dC * 0.02;
 	float softC = mix(1.0 / (kC * kC + 1.0), 1.0, res);
 	float cg = (n78 * 0.5 * (softC + tail)) / radC;
-	vec3 cgl = pow(vec3(cg) + col, vec3(1.24));
+	vec3 cgl = pow(vec3(cg) + col, vec3(1.5));
 
 	float ndcY = gid.y * 2.0 / uResolution.y - 1.0;
 	float emC = max(clamp(uEdgeMask, 0.0, 1.0), 0.0001);
@@ -144,11 +138,10 @@ void main() {
 	float fall = exp(-pow(px * uFalloff, 2.0));
 	col = cgl * mix(1.0, emMask * fall, res) * res * saturate(uLayerOpacity);
 
-	// hue-preserving clip guard: only when a channel would exceed 1 do we scale the whole color
-	// down (max→1) so the core keeps its hue instead of washing to white. Values ≤1 untouched.
 	float m = max(max(col.r, col.g), col.b);
-	col *= (m > 1.0) ? (1.0 / m) : 1.0;
+	vec3 huePreserved = col * ((m > 1.0) ? (1.0 / m) : 1.0);
+	col = mix(huePreserved, min(col, vec3(1.0)), clamp(uWhiteClip, 0.0, 1.0));
 
-	float alpha = saturate(max(max(col.r, col.g), col.b) * 1.32);
+	float alpha = saturate(max(max(col.r, col.g), col.b) * 1.15);
 	outColor = vec4(col, alpha);
 }

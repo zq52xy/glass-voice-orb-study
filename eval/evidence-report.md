@@ -165,19 +165,19 @@ Pass.
   - `target-desktop-release.png`
   - `target-mobile-idle.png`
 - Applied transfer constraints, not source-code copying:
-  - public tuner hidden unless `?tuner=1`;
+  - public tuner restored as default-visible, with `?tuner=0` for clean captures;
   - background picker restored as the bottom-left thumbnail + upload control after user clarification;
   - bottom prompt restyled as a translucent pill;
-  - wave palette shifted toward cyan, purple, pink, and warm white;
-  - wave softness/intensity and glass refraction/highlight tuned toward the reference;
-  - container darkening reduced for a more transparent liquid-glass sphere.
+  - wave shader restored toward the target spectrum-triangle color and white-clip bloom behavior;
+  - wave softness/fill, glass refraction/highlight, and container defaults tuned toward the reference;
+  - container defaults restored to the target source values: black `.25`, fade `1`, gauss `8`, strength `.9`.
 - Preserved existing local state-machine changes: exposed `window.SIRI_STATE`, cross-faded wave/dots, and held `sharedResolved = 1` to avoid transition flicker.
 - Regenerated README media after tuning:
   - `docs/media/desktop-idle.png`
   - `docs/media/desktop-listening.png`
   - `docs/media/desktop-thinking.png`
   - `docs/media/mobile-idle.png`
-  - `docs/media/orb-demo.gif` (360x360, 52 frames, 217376 bytes)
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 229592 bytes)
 - Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - JS line-count check: every `src/*.js` file is <= 200 lines; `src/renderer.js` is exactly 200 lines.
 - Final status: first-pass effect alignment complete; background replacement remains a local feature rather than a target-page visual match.
@@ -188,4 +188,25 @@ Pass.
 - Restored `src/backgrounds.js` to the bottom-left thumbnail picker with upload control.
 - Kept the z1han-inspired effect tuning: softer liquid-glass container, stronger refraction/highlight, and cyan/purple/pink/warm wave palette.
 - README media was regenerated after this restore.
+- Final status: pass.
+
+## Direct Target Source Inspection
+
+- Inspected publicly served frontend source from `https://www.z1han.com/shader/siriai`.
+- Confirmed the page exposes readable module files, including `/shader/siriai/js/main.js`, `/shader/siriai/js/renderer.js`, `/shader/siriai/js/state.js`, and shader modules under `/shader/siriai/js/shaders/`.
+- Used the exposed source as visual/parameter reference only; no target wallpaper assets were imported.
+- Restored tuning controls by default because the user needs live parameter review during effect matching.
+- Updated local wave defaults toward the target `bloom` preset: strong band fill, white clipping, spectrum-triangle color, lower line thickness, and target glass/container defaults.
+- Bumped script cache query values to `v=16`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v16-tuner.png`
+  - `eval/evidence/siri-v16-idle-check.png`
+- Runtime check confirmed default-visible tuner, bottom-left background picker, one preset thumbnail, upload control, `waveBandFill: 30000`, `waveWhiteClip: 1`, `containerStrength: 0.9`, and no console warnings/errors.
+- Regenerated README media with `?tuner=0` clean capture:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 229592 bytes)
+- Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - Final status: pass.
