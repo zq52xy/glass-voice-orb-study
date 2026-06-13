@@ -51,3 +51,22 @@ The user should review whether the default preset and preset ordering are the de
 ## Baseline Policy
 
 No reference baseline update is allowed for this manifest-only background preset change.
+
+## GitHub Pages Deployment Addendum
+
+### Work Target
+
+Deploy the published static WebGL app through GitHub Pages from the `main` branch root.
+
+### Done Definition
+
+- GitHub Pages source is configured as `main` branch `/`.
+- `.nojekyll` exists at the repository root so GitHub Pages does not run Jekyll processing.
+- README includes the public Pages URL.
+- Published URL loads `index.html` and the relative `src/` and `assets/` resources.
+
+### Gates
+
+- GitHub Pages API reports a configured site URL.
+- Published URL responds with the public README/site shell after deployment.
+- Evidence report records the URL and final status.

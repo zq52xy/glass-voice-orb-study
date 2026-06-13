@@ -10,6 +10,14 @@ This is an unofficial learning project. It is not affiliated with, endorsed by, 
 
 ## Demo / 本地演示
 
+Online demo:
+
+在线演示：
+
+```text
+https://zq52xy.github.io/glass-voice-orb-study/
+```
+
 Run a local static server from the repository root:
 
 在仓库根目录启动本地静态服务器：
