@@ -132,3 +132,13 @@ Pass.
 - Published URL: https://zq52xy.github.io/glass-voice-orb-study/
 - HTTP checks returned 200 for the homepage, `src/main.js`, `src/shaders/glass.frag.glsl`, and the public background `.webp`.
 - Final status: deployed.
+
+## Post-Deployment WebGL Warning Fix
+
+- Initial online browser check reported WebGL feedback-loop warnings while the background image was still loading.
+- Root cause: the temporary background fallback sampled `sceneTarget.texture` while rendering into `sceneTarget.framebuffer`.
+- Fixed `src/renderer.js` to use a dedicated 1x1 fallback texture until the real background is ready.
+- Bumped script cache query values in `index.html` from `v=9` to `v=10`.
+- Updated `eval/work-contract.md` to require no feedback-loop warnings on GitHub Pages load.
+- Verified Pages rebuilt successfully and `https://zq52xy.github.io/glass-voice-orb-study/?v=10` opened with no new console warning output.
+- Final status: deployed and warning-free on page load.
