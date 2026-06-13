@@ -115,6 +115,9 @@ Pass.
 - Secret scan command checked common token, password, private-key, and GitHub token patterns; no matches were returned.
 - First local release commit created: `71a194b Initial non-commercial WebGL study release`.
 - Installed GitHub CLI `gh` 2.94.0 through WinGet.
-- Publication is blocked until GitHub CLI authentication succeeds. `gh auth status` reports no logged-in GitHub host, and the browser login attempt did not complete within the polling window.
-- Target repository name prepared for publication: `glass-voice-orb-study`.
-- Final status: blocked on GitHub authentication, not on repository contents.
+- GitHub CLI authentication completed for account `zq52xy`.
+- Public repository created: https://github.com/zq52xy/glass-voice-orb-study
+- Remote configured: `origin` -> `https://github.com/zq52xy/glass-voice-orb-study.git`.
+- Default branch verified: `main`.
+- Remote `main` initially verified at `1b43a007072fce5e97eaa83a8b78c89863d0df2c`.
+- Final status: published.
