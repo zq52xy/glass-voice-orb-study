@@ -84,7 +84,7 @@ Align the local glass-orb look and interaction chrome toward `https://www.z1han.
 ### Transfer Constraints
 
 - Keep only one authorized public background image; do not import target-page wallpapers.
-- Move public chrome closer to the target: subtle top backdrop dots, bottom translucent hint pill, no visible tuning panel by default.
+- Keep the background picker as the bottom-left thumbnail + upload control; only the orb effect and bottom hint pill are aligned toward the target.
 - Tune the orb toward transparent liquid glass: softer container, stronger refraction, thin edge highlight, cyan/purple/pink/warm wave band.
 - Preserve the existing idle/listening/thinking state model and the current user-provided transition smoothing.
 

@@ -151,7 +151,7 @@ Pass.
   - `docs/media/desktop-listening.png` (1280x720)
   - `docs/media/desktop-thinking.png` (1280x720)
   - `docs/media/mobile-idle.png` (780x1688)
-- GIF output: `docs/media/orb-demo.gif` (360x360, 52 frames, 208716 bytes).
+- GIF output: `docs/media/orb-demo.gif` (360x360, 52 frames, 217376 bytes).
 - Capture report from the successful pass had no console warnings; the transient report file was not kept in public media.
 - Updated `README.md` with the GIF, desktop state table, and mobile preview image.
 - Final status: ready for GitHub README and Pages.
@@ -166,7 +166,7 @@ Pass.
   - `target-mobile-idle.png`
 - Applied transfer constraints, not source-code copying:
   - public tuner hidden unless `?tuner=1`;
-  - background selector restyled as subtle top dots;
+  - background picker restored as the bottom-left thumbnail + upload control after user clarification;
   - bottom prompt restyled as a translucent pill;
   - wave palette shifted toward cyan, purple, pink, and warm white;
   - wave softness/intensity and glass refraction/highlight tuned toward the reference;
@@ -177,7 +177,15 @@ Pass.
   - `docs/media/desktop-listening.png`
   - `docs/media/desktop-thinking.png`
   - `docs/media/mobile-idle.png`
-  - `docs/media/orb-demo.gif` (360x360, 52 frames, 208716 bytes)
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 217376 bytes)
 - Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - JS line-count check: every `src/*.js` file is <= 200 lines; `src/renderer.js` is exactly 200 lines.
-- Final status: first-pass alignment complete; remaining visual difference is mainly the authorized dark personal background versus the target page's bright Tahoe-style wallpaper.
+- Final status: first-pass effect alignment complete; background replacement remains a local feature rather than a target-page visual match.
+
+## Background Picker Restore
+
+- User clarified that the important alignment target is the orb special effect, not copying the target page background or removing local background replacement.
+- Restored `src/backgrounds.js` to the bottom-left thumbnail picker with upload control.
+- Kept the z1han-inspired effect tuning: softer liquid-glass container, stronger refraction/highlight, and cyan/purple/pink/warm wave palette.
+- README media was regenerated after this restore.
+- Final status: pass.
