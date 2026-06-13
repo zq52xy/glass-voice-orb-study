@@ -54,6 +54,69 @@ body {
   touch-action: none;
 }
 
+.siri-dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: min(400px, 76vw);
+  min-height: 92px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  padding: 0 10px;
+  pointer-events: none;
+}
+
+.siri-ask,
+.siri-answer {
+  grid-area: 1 / 1;
+  width: 100%;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+  color: #fff;
+  text-shadow: 0 1px 7px rgba(0, 0, 0, 0.42);
+  font: 400 17px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  letter-spacing: 0;
+}
+
+.siri-dialog[data-mode="ask"],
+.siri-dialog[data-mode="reply"] {
+  pointer-events: auto;
+}
+
+.siri-dialog[data-mode="ask"] .siri-ask,
+.siri-dialog[data-mode="reply"] .siri-answer {
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0.18s;
+}
+
+.siri-ask input {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  caret-color: #fff;
+  font: inherit;
+  text-align: left;
+}
+
+.siri-ask input::placeholder {
+  color: rgba(255, 255, 255, 0.44);
+}
+
+.siri-answer {
+  max-height: 104px;
+  overflow: hidden;
+  white-space: pre-wrap;
+}
+
 .siri-control {
   position: fixed;
   left: 50%;
@@ -100,6 +163,15 @@ body {
 }
 
 @media (max-width: 520px) {
+  .siri-dialog {
+    width: min(340px, 72vw);
+  }
+
+  .siri-ask,
+  .siri-answer {
+    font-size: 16px;
+  }
+
   .siri-control {
     bottom: max(22px, env(safe-area-inset-bottom));
     min-width: 8.5rem;

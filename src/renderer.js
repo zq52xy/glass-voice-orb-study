@@ -7,11 +7,13 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
 (function () {
   const P = window.SiriPipeline;
   const DPR_CAP = 2;
-
   // siri27 布局常量（可被 window.SIRI_PARAMS 覆盖）
   const EXPANDED_W = 128; // Lt
   const MARGIN = 20; // Mt
   const EFFECT_SCALE_PX = 1.18; // kt
+  const DIALOG_W = 460;
+  const DIALOG_H = 150;
+  const CORNER_MAX = 44;
   const CONTAINER = { black: 0.25, fade: 1, gauss: 8, strength: 0.9 };
   const param = (key, fallback) => {
     const p = window.SIRI_PARAMS;
@@ -39,9 +41,7 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
     }
 
     async init() {
-      if (!this.gl) {
-        throw new Error("WebGL2 is not available in this browser.");
-      }
+      if (!this.gl) throw new Error("WebGL2 is not available in this browser.");
       const gl = this.gl;
       const { vertex, fragments } = await window.SIRI_SHADERS.load();
       for (const name in fragments) {
@@ -68,12 +68,8 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         const old = this.background.texture;
         this.background = { texture, width: image.width, height: image.height, ready: 1 };
-        if (old) {
-          gl.deleteTexture(old);
-        }
-        if (url.startsWith("blob:")) {
-          URL.revokeObjectURL(url);
-        }
+        if (old) gl.deleteTexture(old);
+        if (url.startsWith("blob:")) URL.revokeObjectURL(url);
       };
       image.src = url;
     }
@@ -89,36 +85,46 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
       }
       this.width = width;
       this.height = height;
-      this._ensureTargets();
+      this._ensureTargets(this._layout());
       gl.viewport(0, 0, width, height);
     }
 
     _layout() {
       const press = this.channels ? this.channels.press : 0;
+      const dialog = Math.max(0, Math.min(1, this.channels ? this.channels.dialog || 0 : 0));
       const a = 1 + press * 0.018;
       const margin = param("margin", MARGIN) * this.dpr;
-      const inner = ballWidth() * this.dpr * a;
-      const panel = inner + margin * 2;
-      const effect = effectPx(this.dpr);
-      const cx = (this.width - panel) * 0.5;
-      const cy = (this.height - panel) * 0.5;
-      const panelCenterY = cy + panel * 0.5;
+      const base = ballWidth() * this.dpr * a;
+      const dw = Math.min(param("dialogWidth", DIALOG_W) * this.dpr, this.width - 48 * this.dpr);
+      const dh = param("dialogHeight", DIALOG_H) * this.dpr;
+      const innerW = base + (dw - base) * dialog;
+      const innerH = base + (dh - base) * dialog;
+      const panelW = innerW + margin * 2;
+      const panelH = innerH + margin * 2;
+      const effectW = Math.max(1, Math.round(innerW * EFFECT_SCALE_PX));
+      const effectH = Math.max(1, Math.round(innerH * EFFECT_SCALE_PX));
+      const half = Math.min(innerW, innerH) * 0.5;
+      const corner = Math.min(half, half + (CORNER_MAX * this.dpr - half) * dialog);
+      const cx = (this.width - panelW) * 0.5;
+      const cy = (this.height - panelH) * 0.5;
+      const panelCenterY = cy + panelH * 0.5;
       return {
         margin,
-        cornerRadius: inner * 0.5,
+        cornerRadius: corner,
         panelOrigin: [cx, cy],
-        panelSize: [panel, panel],
-        effectOrigin: [(this.width - effect) * 0.5, panelCenterY - effect * 0.5],
-        effectSize: [effect, effect],
+        panelSize: [panelW, panelH],
+        effectOrigin: [(this.width - effectW) * 0.5, panelCenterY - effectH * 0.5],
+        effectSize: [effectW, effectH],
       };
     }
 
-    _ensureTargets() {
+    _ensureTargets(L) {
       const gl = this.gl;
-      const effect = effectPx(this.dpr);
-      if (!this.effectTarget || this.effectTarget.width !== effect) {
+      const ew = L ? L.effectSize[0] : effectPx(this.dpr);
+      const eh = L ? L.effectSize[1] : ew;
+      if (!this.effectTarget || this.effectTarget.width !== ew || this.effectTarget.height !== eh) {
         P.disposeTarget(gl, this.effectTarget);
-        this.effectTarget = P.createTarget(gl, effect, effect);
+        this.effectTarget = P.createTarget(gl, ew, eh);
       }
       if (!this.sceneTarget || this.sceneTarget.width !== this.width || this.sceneTarget.height !== this.height) {
         P.disposeTarget(gl, this.sceneTarget);
@@ -156,26 +162,19 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
         return;
       }
       const gl = this.gl;
-      this._ensureTargets();
       const L = this._layout();
+      this._ensureTargets(L);
       const u = window.SiriUniforms.build(this, L);
-
       const bg = this.background.texture || this.fallbackTexture;
-
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.effectTarget.framebuffer);
       gl.viewport(0, 0, this.effectTarget.width, this.effectTarget.height);
       this._premultBlend(false);
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       this._premultBlend(true);
-      if (this.channels.waveLayerOpacity > 0.001) {
-        this._draw(this.passes.wave, u.wave);
-      }
-      if (this.channels.dotsAppear > 0.001) {
-        this._draw(this.passes.dots, u.dots);
-      }
+      if (this.channels.waveLayerOpacity > 0.001) this._draw(this.passes.wave, u.wave);
+      if (this.channels.dotsAppear > 0.001) this._draw(this.passes.dots, u.dots);
       this._premultBlend(false);
-
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.sceneTarget.framebuffer);
       gl.viewport(0, 0, this.width, this.height);
       gl.clearColor(0, 0, 0, 1);
@@ -186,7 +185,6 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
         { name: "uEffectTexture", texture: this.effectTarget.texture },
       ]);
       this._premultBlend(false);
-
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
       gl.viewport(0, 0, this.width, this.height);
       this._draw(this.passes.glass, u.glass, [

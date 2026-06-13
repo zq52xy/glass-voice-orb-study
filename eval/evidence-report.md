@@ -211,6 +211,32 @@ Pass.
 - Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - Final status: pass.
 
+## Dialog Morph Restore
+
+- User pointed out the reference includes a glass morph into a UI dialog container.
+- Continued source-based comparison with target `ask-flow.js`, `state.js`, `renderer.js`, and `siri27.css`.
+- Added a local `dialog` state spring so the WebGL panel morphs from a circular orb into a `460x150` glass dialog container.
+- Updated renderer layout to interpolate panel width/height and effect FBO size during the morph.
+- Added center DOM overlay for ask/reply text inside the glass material.
+- Updated interaction flow:
+  - short click opens the ask container;
+  - long press enters listening;
+  - submit or voice release folds into thinking, then expands into reply.
+- Exposed `dialogWidth` and `dialogHeight` in the tuning panel.
+- Bumped script cache query values to `v=18`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v18-dialog-ask.png`
+  - `eval/evidence/siri-v18-dialog-reply.png`
+- Runtime check confirmed short click opens ask dialog, submit folds into thinking and expands into reply, long press still enters listening, and no console warnings/errors.
+- Regenerated README media:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 195463 bytes)
+- Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
+- Final status: pass.
+
 ## Target Phase And Glass Highlight Follow-Up
 
 - Continued direct source comparison against the target frontend modules.

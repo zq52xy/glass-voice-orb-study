@@ -87,6 +87,7 @@ Align the local glass-orb look and interaction chrome toward `https://www.z1han.
 - Keep the background picker as the bottom-left thumbnail + upload control; only the orb effect and bottom hint pill are aligned toward the target.
 - Keep the tuning panel exposed by default while effect alignment is still being reviewed; allow `?tuner=0` for clean captures.
 - Tune the orb toward transparent liquid glass: softer container, stronger refraction, thin edge highlight, cyan/purple/pink/warm wave band.
+- Restore the target-style glass morph path: click opens an input dialog container, submit/voice release folds into thinking, then expands into a reply container.
 - Preserve the existing idle/listening/thinking state model and the current user-provided transition smoothing.
 
 ### Gates

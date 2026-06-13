@@ -32,6 +32,8 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
       items: [
         { key: "ballWidth", label: "球体大小", min: 60, max: 280, step: 1, def: 128 },
         { key: "margin", label: "边距", min: 0, max: 50, step: 1, def: 20 },
+        { key: "dialogWidth", label: "对话宽度", min: 260, max: 620, step: 1, def: 460 },
+        { key: "dialogHeight", label: "对话高度", min: 110, max: 260, step: 1, def: 150 },
       ],
     },
     {

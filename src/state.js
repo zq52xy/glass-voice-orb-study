@@ -91,7 +91,9 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
     idle: { waveActive: true, fluidDots: false },
     listening: { waveActive: true, fluidDots: false },
     thinking: { waveActive: false, fluidDots: true },
+    dialog: { waveActive: false, fluidDots: false },
   };
+  const DIALOG = { response: 0.5, dampingRatio: 0.8 };
   const WAVE_PHASE_WRAP = 62.831848;
   const WAVE_SPEED_BASE = -2.5;
   const WAVE_SPEED_AUDIO = -12;
@@ -112,6 +114,7 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
       this.fluidDots = new Spring(-1, 0.5, 0.85); // ±1，dots 出现/退场
       this.effectScale = new Spring(1, 0.5, 1);
       this.press = new Spring(0, 0.2, 1);
+      this.dialog = new Spring(0, DIALOG.response, DIALOG.dampingRatio);
       this.derived = {
         waveOpacity: 1,
         waveLayerOpacity: 0.98,
@@ -121,6 +124,7 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
         sharedResolved: 1,
         dotsAppear: 0,
         press: 0,
+        dialog: 0,
       };
     }
 
@@ -137,6 +141,7 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
       this.waveOpacity.setTarget(cfg.waveActive ? 1 : 0);
       this.fluidDots.setTarget(cfg.fluidDots ? 1 : -1);
       this.effectScale.setTarget(cfg.fluidDots ? 2 / 3 : 1);
+      this.dialog.setTarget(mode === "dialog" ? 1 : 0);
     }
 
     setPressed(pressed) {
@@ -148,6 +153,7 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
       const dots = this.fluidDots.step(dt);
       const scale = this.effectScale.step(dt);
       const press = this.press.step(dt);
+      const dialog = this.dialog.step(dt);
       const d = this.derived;
       d.waveOpacity = wave;
       d.waveLayerOpacity = 0.98 * Math.min(1, Math.max(0, wave));
@@ -163,6 +169,7 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
       d.sharedResolved = 1;
       d.dotsAppear = Math.max(0, Math.min(1, dots));
       d.press = press;
+      d.dialog = dialog;
       return d;
     }
   }
