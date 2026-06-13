@@ -106,3 +106,15 @@ Pass.
 - Updated `docs/quality-rubric.md` to require English/Chinese consistency for purpose, attribution, asset rights, and license restrictions.
 - Updated `CLAUDE.md` to reflect bilingual public release documentation.
 - Final status: Pass.
+
+## GitHub Publication Prep
+
+- Initialized local Git repository on branch `main`.
+- Added `.gitattributes` to normalize text files to LF and keep image formats binary.
+- Confirmed `.local/`, `eval/evidence/`, and `diag-*.png` are ignored before publication.
+- Secret scan command checked common token, password, private-key, and GitHub token patterns; no matches were returned.
+- First local release commit created: `71a194b Initial non-commercial WebGL study release`.
+- Installed GitHub CLI `gh` 2.94.0 through WinGet.
+- Publication is blocked until GitHub CLI authentication succeeds. `gh auth status` reports no logged-in GitHub host, and the browser login attempt did not complete within the polling window.
+- Target repository name prepared for publication: `glass-voice-orb-study`.
+- Final status: blocked on GitHub authentication, not on repository contents.
