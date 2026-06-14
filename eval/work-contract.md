@@ -304,3 +304,30 @@ Apply the browser annotation for the reply text and reduce the visible hard edge
 - `eval/evidence/siri-v27-reply-softness.png`
 - `eval/evidence/siri-v27-reply-softness-check.json`
 - `eval/evidence/readme-media-v27-capture-report.json`
+
+## Reply Padding Cache Bust Addendum
+
+### Work Target
+
+Ensure the already-updated reply padding rule reaches GitHub Pages users by cache-busting the stylesheet, not only the scripts.
+
+### Done Definition
+
+- `index.html` loads `src/styles.css` with a version query.
+- Script query values are bumped consistently with the stylesheet query.
+- The source `.siri-answer` padding rule remains `0`.
+- No temporary browser annotation attributes are copied into source.
+
+### Gates
+
+- Runtime check confirms the loaded stylesheet URL includes `styles.css?v=28`.
+- Runtime check confirms the real reply flow has padding left/right `0px`.
+- Runtime check confirms the real reply flow keeps opacity `0.9`.
+- Runtime check confirms reply text remains `我是智能助手，有什么可以帮到您？`.
+- Browser capture has no console warnings or errors.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v28-css-cache-bust-reply.png`
+- `eval/evidence/siri-v28-css-cache-bust-check.json`

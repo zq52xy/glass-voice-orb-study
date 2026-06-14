@@ -454,6 +454,27 @@ Pass.
   - `eval/evidence/readme-media-v27-capture-report.json`
 - Final status: pass.
 
+## Reply Padding Cache Bust
+
+- User repeated the browser annotation for `p#siri-answer` padding left/right `0px`.
+- Source `src/styles.css` already had `.siri-answer { padding: 0; }`; the remaining issue was that `index.html` loaded `./src/styles.css` without a version query while scripts were cache-busted.
+- Updated `index.html`:
+  - stylesheet now loads as `./src/styles.css?v=28`;
+  - script query values are bumped to `v=28` for a consistent entrypoint refresh.
+- No temporary browser annotation attributes were copied into source.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v28-css-cache-bust-reply.png`
+  - `eval/evidence/siri-v28-css-cache-bust-check.json`
+- Runtime check confirmed:
+  - loaded stylesheet href is `http://127.0.0.1:4173/src/styles.css?v=28`;
+  - real reply flow displays `我是智能助手，有什么可以帮到您？`;
+  - answer padding left/right are `0px`;
+  - answer opacity remains `0.9`;
+  - all scripts load with `v=28`;
+  - browser console warnings/errors were empty.
+- README media was not regenerated because the visual source rule was unchanged; this pass only fixed browser cache delivery.
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.
