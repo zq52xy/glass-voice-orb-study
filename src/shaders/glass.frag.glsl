@@ -28,6 +28,8 @@ uniform float uHlCurv;
 
 uniform float uShadowAmount;
 uniform float uCausticAmount;
+uniform float uShadowOffsetY;
+uniform float uCausticOffsetY;
 uniform float uBackgroundReady;
 
 out vec4 outColor;
@@ -161,12 +163,17 @@ vec3 outsideProjection(vec2 p, vec2 halfSize, float d) {
 	float rightBias = smoothstep(-0.55, 1.0, n.x);
 	float aspect = max(halfSize.x / max(halfSize.y, 1.0), 1.0);
 	float aspectAtten = 1.0 / (1.0 + max(aspect - 1.0, 0.0) * 0.22);
-	float shadow = outside * edge * aspectAtten * (0.28 + 0.3 * topBias + 0.2 * rightBias);
+	float r = max(min(halfSize.x, halfSize.y), 1.0);
+	vec2 s = vec2(0.14 * halfSize.x, -0.2 * r + uShadowOffsetY * r);
+	vec2 sq = (p - s) / max(r * 1.18, 1.0);
+	float diskShadow = exp(-dot(sq, sq) * 1.45);
+	float rimShadow = edge * (0.2 + 0.22 * topBias + 0.14 * rightBias);
+	float shadow = outside * aspectAtten * (rimShadow + diskShadow * 0.46);
 
-	vec2 c = vec2(0.0, halfSize.y + 0.08 * uPanelSize.y);
-	vec2 q = vec2((p.x - c.x) / max(halfSize.x * 0.9, 1.0), (p.y - c.y) / max(halfSize.y * 0.32, 1.0));
-	float caustic = exp(-(q.x * q.x * 3.1 + q.y * q.y * 9.0));
-	float core = exp(-(q.x * q.x * 10.0 + q.y * q.y * 28.0));
+	vec2 c = vec2(0.0, halfSize.y + r * (0.28 + uCausticOffsetY));
+	vec2 q = vec2((p.x - c.x) / max(r * 0.95, 1.0), (p.y - c.y) / max(r * 0.82, 1.0));
+	float caustic = exp(-(q.x * q.x * 1.55 + q.y * q.y * 1.95));
+	float core = exp(-(q.x * q.x * 4.6 + q.y * q.y * 5.2));
 	float under = smoothstep(0.0, 0.85, n.y);
 	vec3 glow = vec3(1.0, 0.82, 0.46) * caustic + vec3(0.78, 0.9, 1.0) * core * 0.34;
 	return glow * under * outside * uCausticAmount - vec3(shadow * uShadowAmount);

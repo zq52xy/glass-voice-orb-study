@@ -182,3 +182,30 @@ Use the newly added `极光` preset as the default wallpaper and add the referen
 - `eval/evidence/siri-v23-caustic-shadow-default.png`
 - `eval/evidence/siri-v23-caustic-shadow-dialog.png`
 - `eval/evidence/siri-v23-caustic-shadow-check.json`
+
+## Round Caustic And Projection Offset Addendum
+
+### Work Target
+
+Make the bottom caustic projection rounder, closer to the external soft shadow shape, and expose vertical position controls for both the exterior shadow and caustic.
+
+### Done Definition
+
+- Caustic sizing is based on the glass short edge instead of being stretched by panel width.
+- Exterior shadow includes a circular soft-disk component.
+- Tuning panel exposes vertical offset controls for shadow and caustic.
+- Uniforms pass both offset controls to the glass shader.
+- Script cache query values are bumped so GitHub Pages receives the updated shader.
+
+### Gates
+
+- Runtime check confirms `阴影上下` and `焦散上下` controls exist and update `window.SIRI_PARAMS`.
+- Idle and dialog screenshots exist for review.
+- Browser console has no warnings or errors.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v24-round-caustic-default.png`
+- `eval/evidence/siri-v24-round-caustic-dialog.png`
+- `eval/evidence/siri-v24-round-caustic-check.json`

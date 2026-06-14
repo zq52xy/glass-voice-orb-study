@@ -323,6 +323,39 @@ Pass.
 - Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - Final status: pass.
 
+## Round Caustic And Projection Offset Controls
+
+- User clarified that the bottom caustic should not be a flat strip; it should be rounder, similar to the external shadow, and both shadow/caustic need vertical-position controls.
+- Updated `src/shaders/glass.frag.glsl`:
+  - caustic now uses the glass shape short edge as its radius base instead of stretching across the full panel width;
+  - caustic is now a round/near-round warm light pool with a smaller cool core;
+  - exterior shadow now includes a circular soft-disk component in addition to the rim feather;
+  - both projections read vertical offsets from uniforms.
+- Updated `src/tuner.js` with:
+  - `shadowOffsetY` / `阴影上下`;
+  - `causticOffsetY` / `焦散上下`.
+- Updated `src/uniforms.js` to pass `uShadowOffsetY` and `uCausticOffsetY`.
+- Bumped script cache query values to `v=24`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v24-round-caustic-default.png`
+  - `eval/evidence/siri-v24-round-caustic-dialog.png`
+  - `eval/evidence/siri-v24-round-caustic-check.json`
+- Runtime check confirmed:
+  - default background remained `极光`;
+  - four presets remained available;
+  - ask dialog still opens with a `500 x 150` panel;
+  - `阴影上下` and `焦散上下` controls exist;
+  - controls updated `window.SIRI_PARAMS.shadowOffsetY` and `window.SIRI_PARAMS.causticOffsetY`;
+  - browser console warnings/errors were empty.
+- Regenerated README media from `?media=1&v=24`:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 304202 bytes)
+- Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.
