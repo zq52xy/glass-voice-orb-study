@@ -92,8 +92,10 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
     _layout() {
       const press = this.channels ? this.channels.press : 0;
       const rawDialog = this.channels ? this.channels.dialog || 0 : 0;
-      const dialog = Math.max(0, Math.min(1.08, rawDialog));
-      const breathe = Math.sin(this.time * param("breathSpeed", 1.65)) * param("breathAmount", 0.028) * (1 - Math.min(1, dialog));
+      const closeLimit = -param("dialogCloseBounce", 0.055);
+      const dialog = Math.max(closeLimit, Math.min(1.08, rawDialog));
+      const open = Math.max(0, Math.min(1, dialog));
+      const breathe = Math.sin(this.time * param("breathSpeed", 1.65)) * param("breathAmount", 0.028) * (1 - open);
       const a = 1 + press * 0.018 + breathe;
       const margin = param("margin", MARGIN) * this.dpr;
       const base = ballWidth() * this.dpr * a;
@@ -106,7 +108,7 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
       const effectW = Math.max(1, Math.round(innerW * EFFECT_SCALE_PX));
       const effectH = Math.max(1, Math.round(innerH * EFFECT_SCALE_PX));
       const half = Math.min(innerW, innerH) * 0.5;
-      const corner = Math.min(half, half + (CORNER_MAX * this.dpr - half) * dialog);
+      const corner = Math.min(half, half + (CORNER_MAX * this.dpr - half) * Math.max(0, dialog));
       const cx = (this.width - panelW) * 0.5;
       const cy = (this.height - panelH) * 0.5;
       const panelCenterY = cy + panelH * 0.5;

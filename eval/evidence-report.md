@@ -211,6 +211,28 @@ Pass.
 - Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - Final status: pass.
 
+## Dialog Close Spring Follow-Up
+
+- User reported that the moment where the input container returns to the glass ball felt stiff.
+- Updated `src/state.js` so dialog opening and closing use separate spring options:
+  - open remains springy for expansion;
+  - close uses a faster, lower-damping spring for visible return energy.
+- Updated `src/renderer.js` to allow a small controlled negative dialog morph during close instead of hard-clamping at `0`.
+- Exposed `dialogCloseBounce` as `收起回弹` in the tuning panel.
+- Updated `src/main.js` to blur focused dialog content before setting `aria-hidden`, removing the close-time accessibility warning.
+- Bumped script cache query values to `v=20`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v20-close-spring.png`
+  - `eval/evidence/siri-v20-close-spring-check.json`
+- Runtime check confirmed:
+  - close spring raw value crossed below zero (`minRaw: -0.1289`);
+  - rendered panel width compressed below idle width before settling (`148.74` vs idle `171.58`);
+  - final dialog value returned near zero;
+  - ask, reply, and long-press listening paths still work;
+  - browser console warnings/errors were empty.
+- JS line-count check: every `src/*.js` file remains <= 200 lines.
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.

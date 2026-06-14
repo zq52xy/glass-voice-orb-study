@@ -34,6 +34,7 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
         { key: "breathAmount", label: "呼吸幅度", min: 0, max: 0.08, step: 0.001, def: 0.028 },
         { key: "breathSpeed", label: "呼吸速度", min: 0.2, max: 4, step: 0.01, def: 1.65 },
         { key: "margin", label: "边距", min: 0, max: 50, step: 1, def: 20 },
+        { key: "dialogCloseBounce", label: "收起回弹", min: 0, max: 0.12, step: 0.001, def: 0.055 },
         { key: "dialogWidth", label: "对话宽度", min: 260, max: 620, step: 1, def: 460 },
         { key: "dialogHeight", label: "对话高度", min: 110, max: 260, step: 1, def: 150 },
       ],

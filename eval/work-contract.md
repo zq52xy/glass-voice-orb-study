@@ -96,3 +96,29 @@ Align the local glass-orb look and interaction chrome toward `https://www.z1han.
 - README media is regenerated from the current app after tuning.
 - Browser capture report has no console warnings.
 - `src/*.js` files remain within the project line-count limit.
+
+## Dialog Close Spring Addendum
+
+### Work Target
+
+Make the input/reply container feel springy when it collapses back into the glass ball, avoiding a hard clamp at the orb boundary.
+
+### Done Definition
+
+- Closing from ask/reply uses a dedicated dialog-close spring, not the same clamp-only path as opening.
+- Renderer allows a small controlled close overshoot before settling back to the circular orb.
+- The close overshoot is tunable without breaking existing width/height controls.
+- Script cache query values are bumped so GitHub Pages receives the updated behavior.
+
+### Gates
+
+- Runtime check confirms dialog value crosses below zero during close and the rendered panel size settles back to the idle ball.
+- Short-click ask, close-to-idle, submit-to-reply, and long-press listening paths still work.
+- Browser capture has no console warnings or WebGL errors.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v20-close-spring.png`
+- `eval/evidence/siri-v20-close-spring-check.json`
+- `eval/evidence-report.md`

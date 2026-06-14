@@ -31,6 +31,9 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
   }
 
   function setDialog(mode, text) {
+    if (mode === "idle" && dialog.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
     dialog.dataset.mode = mode;
     dialog.setAttribute("aria-hidden", String(mode === "idle"));
     answer.textContent = text || "";

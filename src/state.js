@@ -93,7 +93,8 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
     thinking: { waveActive: false, fluidDots: true },
     dialog: { waveActive: false, fluidDots: false },
   };
-  const DIALOG = { response: 0.42, dampingRatio: 0.62 };
+  const DIALOG_OPEN = { response: 0.42, dampingRatio: 0.62 };
+  const DIALOG_CLOSE = { response: 0.36, dampingRatio: 0.54 };
   const WAVE_PHASE_WRAP = 62.831848;
   const WAVE_SPEED_BASE = -2.5;
   const WAVE_SPEED_AUDIO = -12;
@@ -114,7 +115,7 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
       this.fluidDots = new Spring(-1, 0.5, 0.85); // ±1，dots 出现/退场
       this.effectScale = new Spring(1, 0.5, 1);
       this.press = new Spring(0, 0.2, 1);
-      this.dialog = new Spring(0, DIALOG.response, DIALOG.dampingRatio);
+      this.dialog = new Spring(0, DIALOG_OPEN.response, DIALOG_OPEN.dampingRatio);
       this.derived = {
         waveOpacity: 1,
         waveLayerOpacity: 0.98,
@@ -141,6 +142,8 @@ POS: 1:1 port of the siri27 spring model; renderer reads derived values, does no
       this.waveOpacity.setTarget(cfg.waveActive ? 1 : 0);
       this.fluidDots.setTarget(cfg.fluidDots ? 1 : -1);
       this.effectScale.setTarget(cfg.fluidDots ? 2 / 3 : 1);
+      const dialogCfg = mode === "dialog" ? DIALOG_OPEN : DIALOG_CLOSE;
+      this.dialog.setOptions(dialogCfg.response, dialogCfg.dampingRatio);
       this.dialog.setTarget(mode === "dialog" ? 1 : 0);
     }
 
