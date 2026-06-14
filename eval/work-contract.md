@@ -113,6 +113,7 @@ Make the input/reply container feel springy when it collapses back into the glas
 ### Gates
 
 - Runtime check confirms dialog value crosses below zero during close and the rendered panel size settles back to the idle ball.
+- Runtime check confirms the rendered close curve does not plateau at the minimum compressed size.
 - Short-click ask, close-to-idle, submit-to-reply, and long-press listening paths still work.
 - Browser capture has no console warnings or WebGL errors.
 - `src/*.js` files remain within the project line-count limit.
@@ -121,4 +122,6 @@ Make the input/reply container feel springy when it collapses back into the glas
 
 - `eval/evidence/siri-v20-close-spring.png`
 - `eval/evidence/siri-v20-close-spring-check.json`
+- `eval/evidence/siri-v21-close-no-pause.png`
+- `eval/evidence/siri-v21-close-no-pause-check.json`
 - `eval/evidence-report.md`

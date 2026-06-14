@@ -233,6 +233,26 @@ Pass.
 - JS line-count check: every `src/*.js` file remains <= 200 lines.
 - Final status: pass.
 
+## Dialog Close Pause Removal
+
+- User clarified that the return-to-glass-ball moment should not pause at the compressed point.
+- Root cause: v20 rendered close motion used a hard negative clamp, so the spring could move below the visual limit while the rendered shape stayed pinned at the same minimum size.
+- Updated `src/renderer.js` to replace the hard close clamp with continuous `tanh` soft compression.
+- Updated `src/state.js` to use a smaller, faster close spring (`response: 0.3`, `dampingRatio: 0.78`) so the return keeps energy without holding.
+- Reduced default `dialogCloseBounce` from `0.055` to `0.032` and kept it tunable as `收起回弹`.
+- Bumped script cache query values to `v=21`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v21-close-no-pause.png`
+  - `eval/evidence/siri-v21-close-no-pause-check.json`
+- Runtime check confirmed:
+  - close spring still crossed below zero (`minRaw: -0.0187`);
+  - rendered compression is lighter (`minPanelW: 161.13` vs idle `171.43`);
+  - minimum-size hold was removed (`maxConsecutiveNearMin: 1`);
+  - final dialog value returned to zero;
+  - ask, reply, and long-press listening paths still work;
+  - browser console warnings/errors were empty.
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.
