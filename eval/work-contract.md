@@ -404,6 +404,42 @@ Add white and black solid backgrounds to the existing preset picker while preser
 - `docs/media/mobile-idle.png`
 - `docs/media/orb-demo.gif`
 
+## Author GitHub Link Addendum
+
+### Work Target
+
+Add a visible GitHub author link to the website without blocking the glass effect, tuning panel, background picker, or primary controls.
+
+### Done Definition
+
+- The page displays `masonchou · GitHub`.
+- The link points to `https://github.com/zq52xy`.
+- The link opens in a new tab with `rel="noreferrer noopener"`.
+- The link is positioned away from the bottom control, background picker, and right-side tuning panel.
+- Script and stylesheet query values are bumped to `v=31`.
+- README screenshots and GIF are regenerated with the updated visible website chrome.
+
+### Gates
+
+- Runtime check confirms the author link text, href, target, and rel.
+- Runtime check confirms desktop and mobile author-link rectangles do not overlap the background picker or control button.
+- Browser capture has no console warnings or errors.
+- GIF dimensions and frame count are recorded.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v31-author-link-check.json`
+- `eval/evidence/siri-v31-author-link-desktop.png`
+- `eval/evidence/siri-v31-author-link-mobile.png`
+- `eval/evidence/readme-media-v31-capture-report.json`
+- `docs/media/desktop-idle.png`
+- `docs/media/desktop-listening.png`
+- `docs/media/desktop-thinking.png`
+- `docs/media/desktop-reply.png`
+- `docs/media/mobile-idle.png`
+- `docs/media/orb-demo.gif`
+
 ## Light Boundary Softness Retarget Addendum
 
 ### Work Target

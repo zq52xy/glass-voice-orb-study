@@ -239,6 +239,28 @@ Pass.
   - `eval/evidence/readme-media-v30-capture-report.json`
 - Final status: pass.
 
+## Author GitHub Link
+
+- Added a fixed top-left website author link:
+  - visible text: `masonchou · GitHub`
+  - href: `https://github.com/zq52xy`
+- Bumped public asset query strings to `v=31`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v31-author-link-desktop.png`
+  - `eval/evidence/siri-v31-author-link-mobile.png`
+  - `eval/evidence/siri-v31-author-link-check.json`
+- Runtime check confirmed desktop and mobile link text, href, new-tab behavior, `rel="noreferrer noopener"`, no overlap with the background picker or control button, six background thumbnails still present, and no console warnings/errors.
+- Regenerated README media:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/desktop-reply.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (520x320, 64 frames, 196376 bytes)
+- Capture report:
+  - `eval/evidence/readme-media-v31-capture-report.json`
+- Final status: pass.
+
 ## Dialog Close Spring Follow-Up
 
 - User reported that the moment where the input container returns to the glass ball felt stiff.

@@ -1,7 +1,7 @@
 /*
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 INPUT: Static DOM from index.html.
-OUTPUT: Full-screen visual surface and minimal status control.
+OUTPUT: Full-screen visual surface, minimal status control, and author link.
 POS: Presentation layer only; shader visuals stay in src/shaders.js.
 */
 :root {
@@ -221,6 +221,39 @@ body {
   color: var(--text-active);
 }
 
+.siri-author {
+  position: fixed;
+  left: 14px;
+  top: max(14px, env(safe-area-inset-top));
+  z-index: 7;
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0.42rem 0.68rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.24);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  color: rgba(255, 255, 255, 0.72);
+  font: 500 13px/1 system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-shadow: 0 1px 12px var(--shadow);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.18);
+  white-space: nowrap;
+}
+
+.siri-author:hover {
+  color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.siri-author:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 6px;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -247,5 +280,13 @@ body {
     bottom: max(22px, env(safe-area-inset-bottom));
     min-width: 8.5rem;
     font-size: 14px;
+  }
+
+  .siri-author {
+    left: 10px;
+    top: max(10px, env(safe-area-inset-top));
+    min-height: 32px;
+    padding: 0.38rem 0.58rem;
+    font-size: 12px;
   }
 }

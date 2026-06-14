@@ -2,7 +2,7 @@
 <!--
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 INPUT: Browser loads this static page from localhost.
-OUTPUT: Full-viewport Siri-style WebGL scene with accessible status text.
+OUTPUT: Full-viewport Siri-style WebGL scene with accessible status text and author link.
 POS: Root entry point; script order wires shader, renderer, audio, and app state.
 -->
 <html lang="en">
@@ -11,7 +11,7 @@ POS: Root entry point; script order wires shader, renderer, audio, and app state
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Glass Voice Orb Study</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./src/styles.css?v=30" />
+    <link rel="stylesheet" href="./src/styles.css?v=31" />
   </head>
   <body>
     <main class="siri-page">
@@ -40,16 +40,23 @@ POS: Root entry point; script order wires shader, renderer, audio, and app state
       </div>
       <button id="siri-control" class="siri-control" type="button">Hold to speak</button>
       <p id="siri-status" class="sr-only" aria-live="polite">Idle.</p>
+      <a
+        class="siri-author"
+        href="https://github.com/zq52xy"
+        target="_blank"
+        rel="noreferrer noopener"
+        aria-label="Open masonchou on GitHub"
+      >masonchou · GitHub</a>
     </main>
 
-    <script defer src="./src/tuner.js?v=30"></script>
-    <script defer src="./src/backgrounds.js?v=30"></script>
-    <script defer src="./src/shaders.js?v=30"></script>
-    <script defer src="./src/pipeline.js?v=30"></script>
-    <script defer src="./src/uniforms.js?v=30"></script>
-    <script defer src="./src/state.js?v=30"></script>
-    <script defer src="./src/audio.js?v=30"></script>
-    <script defer src="./src/renderer.js?v=30"></script>
-    <script defer src="./src/main.js?v=30"></script>
+    <script defer src="./src/tuner.js?v=31"></script>
+    <script defer src="./src/backgrounds.js?v=31"></script>
+    <script defer src="./src/shaders.js?v=31"></script>
+    <script defer src="./src/pipeline.js?v=31"></script>
+    <script defer src="./src/uniforms.js?v=31"></script>
+    <script defer src="./src/state.js?v=31"></script>
+    <script defer src="./src/audio.js?v=31"></script>
+    <script defer src="./src/renderer.js?v=31"></script>
+    <script defer src="./src/main.js?v=31"></script>
   </body>
 </html>
