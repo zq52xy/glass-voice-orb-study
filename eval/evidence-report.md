@@ -387,6 +387,38 @@ Pass.
   - `eval/evidence/readme-media-v25-capture-report.json`
 - Final status: pass.
 
+## Projection Default Parameters
+
+- User supplied approved tuning values from the tuner panel and requested using them as defaults.
+- Updated `src/tuner.js` defaults:
+  - `shadowAmount` / `外部阴影`: `0.4`;
+  - `causticAmount` / `底部焦散`: `1.6`;
+  - `shadowOffsetY` / `阴影上下`: `0.3`;
+  - `causticOffsetY` / `焦散上下`: `-1`.
+- Updated `src/uniforms.js` fallback values to the same four numbers.
+- Bumped script cache query values to `v=26`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v26-default-params-idle.png`
+  - `eval/evidence/siri-v26-default-params-dialog.png`
+  - `eval/evidence/siri-v26-default-params-check.json`
+- Runtime check confirmed:
+  - all four `window.SIRI_PARAMS` values match the requested defaults;
+  - all four tuner slider values match the requested defaults;
+  - default background remains `aurora-glass-ball.webp`;
+  - active preset title remains `极光`;
+  - four presets remain available;
+  - ask dialog still opens with a `500 x 150` panel;
+  - browser console warnings/errors were empty.
+- Regenerated README media from `?media=1&v=26&tuner=0`:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 678161 bytes)
+- Capture report from the successful pass had no console warnings:
+  - `eval/evidence/readme-media-v26-capture-report.json`
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.

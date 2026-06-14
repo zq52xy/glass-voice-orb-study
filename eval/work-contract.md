@@ -240,3 +240,35 @@ Make the external shadow and bottom caustic behave like projections of the same 
 - `eval/evidence/siri-v25-shape-projection-dialog.png`
 - `eval/evidence/siri-v25-shape-projection-check.json`
 - `eval/evidence/readme-media-v25-capture-report.json`
+
+## Projection Default Parameters Addendum
+
+### Work Target
+
+Use the user-approved tuning values as the default projection parameters for the glass effect.
+
+### Done Definition
+
+- `shadowAmount` defaults to `0.4`.
+- `causticAmount` defaults to `1.6`.
+- `shadowOffsetY` defaults to `0.3`.
+- `causticOffsetY` defaults to `-1`.
+- Tuner defaults and shader uniform fallbacks use the same values.
+- Script cache query values are bumped so GitHub Pages receives the updated defaults.
+
+### Gates
+
+- Runtime check confirms all four `window.SIRI_PARAMS` values match the requested defaults.
+- Runtime check confirms all four tuner slider values match the requested defaults.
+- Runtime check confirms the ask dialog still opens with the `500 x 150` panel.
+- Idle and dialog screenshots exist for review.
+- Browser capture has no console warnings or errors.
+- README media is regenerated from the current app.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v26-default-params-idle.png`
+- `eval/evidence/siri-v26-default-params-dialog.png`
+- `eval/evidence/siri-v26-default-params-check.json`
+- `eval/evidence/readme-media-v26-capture-report.json`
