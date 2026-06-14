@@ -125,3 +125,30 @@ Make the input/reply container feel springy when it collapses back into the glas
 - `eval/evidence/siri-v21-close-no-pause.png`
 - `eval/evidence/siri-v21-close-no-pause-check.json`
 - `eval/evidence-report.md`
+
+## Dialog Height And Preset Restore Addendum
+
+### Work Target
+
+Set the default dialog container height to `110` and restore the missing authorized preset wallpaper.
+
+### Done Definition
+
+- Renderer fallback `dialogHeight` is `110`.
+- Tuning panel default `dialogHeight` is `110`.
+- Background picker exposes four authorized presets plus upload.
+- The restored preset is published as a compressed WebP asset, not the original large local PNG.
+- Script cache query values are bumped so GitHub Pages receives the updated defaults.
+
+### Gates
+
+- Runtime check confirms the ask panel height is approximately `110 + margin * 2`.
+- Runtime check confirms four preset thumbnails and the restored preset loads with `background.ready === 1`.
+- Browser console has no warnings or errors.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v22-dialog-height-110.png`
+- `eval/evidence/siri-v22-aurora-preset.png`
+- `eval/evidence/siri-v22-height-preset-check.json`

@@ -36,7 +36,7 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
         { key: "margin", label: "边距", min: 0, max: 50, step: 1, def: 20 },
         { key: "dialogCloseBounce", label: "收起回弹", min: 0, max: 0.08, step: 0.001, def: 0.032 },
         { key: "dialogWidth", label: "对话宽度", min: 260, max: 620, step: 1, def: 460 },
-        { key: "dialogHeight", label: "对话高度", min: 110, max: 260, step: 1, def: 150 },
+        { key: "dialogHeight", label: "对话高度", min: 110, max: 260, step: 1, def: 110 },
       ],
     },
     {

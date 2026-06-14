@@ -253,6 +253,41 @@ Pass.
   - browser console warnings/errors were empty.
 - Final status: pass.
 
+## Dialog Height And Preset Restore
+
+- User requested the default dialog height be set to `110` and reported one preset wallpaper was missing.
+- Confirmed the public preset list had three entries while `.local/open-source-excluded/assets/` contained one additional duplicated PNG pair:
+  - `aurora-glass-ball.png`
+  - `玻璃球-0401-14-2.png`
+- Hash check confirmed both local PNGs are identical, so only one compressed public asset was produced.
+- Generated `assets/aurora-glass-ball.webp` from the local authorized PNG source; final size is `393614` bytes.
+- Updated `src/backgrounds.js` to expose four presets:
+  - `雪街`
+  - `雪夜`
+  - `极光`
+  - `AI 面孔`
+- Updated `src/renderer.js` fallback dialog height to `110`.
+- Updated `src/tuner.js` default `dialogHeight` to `110`.
+- Bumped script cache query values to `v=22`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v22-dialog-height-110.png`
+  - `eval/evidence/siri-v22-aurora-preset.png`
+  - `eval/evidence/siri-v22-height-preset-check.json`
+- Runtime check confirmed:
+  - four preset thumbnails plus upload;
+  - restored `aurora-glass-ball.webp` preset selected and loaded with `background.ready === 1`;
+  - ask panel size `500.08 x 150.00`, matching `dialogHeight 110` plus `20px` top/bottom margin;
+  - tuning panel `window.SIRI_PARAMS.dialogHeight === 110`;
+  - browser console warnings/errors were empty.
+- Regenerated README media from `?media=1&v=22`:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 191746 bytes)
+- Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.

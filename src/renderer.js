@@ -12,7 +12,7 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
   const MARGIN = 20; // Mt
   const EFFECT_SCALE_PX = 1.18; // kt
   const DIALOG_W = 460;
-  const DIALOG_H = 150;
+  const DIALOG_H = 110;
   const CORNER_MAX = 44;
   const CONTAINER = { black: 0.25, fade: 1, gauss: 8, strength: 0.9 };
   const param = (key, fallback) => {
