@@ -211,6 +211,34 @@ Pass.
 - Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - Final status: pass.
 
+## Solid Background Presets
+
+- Added two generated local solid assets:
+  - `assets/background-white.png`
+  - `assets/background-black.png`
+- Updated `src/backgrounds.js` to expose six presets in order:
+  - `极光`, `雪街`, `雪夜`, `AI 面孔`, `白色`, `黑色`
+- Kept the default background as `./assets/aurora-glass-ball.webp`.
+- Bumped public asset query strings to `v=30`.
+- Updated README wording to describe personal and solid-color background presets, and clarified that generated solid-color presets are distinct from the personal background images.
+- Updated `docs/quality-rubric.md` so future documentation reviews preserve that distinction.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v30-solid-background-presets.png`
+  - `eval/evidence/siri-v30-white-background.png`
+  - `eval/evidence/siri-v30-black-background.png`
+  - `eval/evidence/siri-v30-solid-background-presets-check.json`
+- Runtime check confirmed six thumbnails, default active `极光`, white and black preset texture readiness, and no console warnings/errors.
+- Regenerated README media:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/desktop-reply.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (520x320, 64 frames, 197078 bytes)
+- Capture report:
+  - `eval/evidence/readme-media-v30-capture-report.json`
+- Final status: pass.
+
 ## Dialog Close Spring Follow-Up
 
 - User reported that the moment where the input container returns to the glass ball felt stiff.

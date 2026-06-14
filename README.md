@@ -72,8 +72,8 @@ Mobile:
 - 可形变的玻璃回复容器，并居中显示助手回复。
 - Optional microphone-reactive animation with demo fallback.
 - 可选麦克风响应动画，并带有演示 fallback。
-- Included personal background presets for the demo.
-- 内置多个个人背景预设。
+- Included personal and solid-color background presets for the demo.
+- 内置个人背景与纯色背景预设。
 - In-browser tuning panel. Press `H` to hide or show it.
 - 浏览器内调参面板，按 `H` 隐藏或显示。
 - Tunable exterior shadow, caustic projection, vertical offsets, and light/shadow boundary softness.
@@ -89,9 +89,9 @@ Shader/source attribution is maintained in [NOTICE.md](./NOTICE.md), including t
 
 Shader / 源码参考来源记录在 [NOTICE.md](./NOTICE.md)，其中包含本学习项目使用的 Shadertoy 参考来源。
 
-The included background images are personal demo assets and are not licensed for reuse outside this repository.
+The included personal background images are personal demo assets and are not licensed for reuse outside this repository. Solid-color presets are generated demo assets and follow the repository license.
 
-内置背景图是个人演示资产，不授权在本仓库之外复用。
+内置个人背景图是个人演示资产，不授权在本仓库之外复用。纯色背景预设是生成的演示资产，遵循本仓库许可限制。
 
 ## Notes / 注意事项
 

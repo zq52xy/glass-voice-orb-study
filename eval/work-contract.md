@@ -367,6 +367,43 @@ Refresh the GitHub README and curated preview media so the repository landing pa
 - `docs/media/mobile-idle.png`
 - `docs/media/orb-demo.gif`
 
+## Solid Background Presets Addendum
+
+### Work Target
+
+Add white and black solid backgrounds to the existing preset picker while preserving the current default background and public README media.
+
+### Done Definition
+
+- White and black backgrounds are stored as local assets under `assets/`.
+- `src/backgrounds.js` exposes the two new presets after the existing personal presets.
+- The default background remains `极光`.
+- Script and stylesheet query values are bumped to `v=30`.
+- README feature wording covers both personal and solid-color presets.
+- README screenshots and GIF are regenerated with the updated preset strip.
+
+### Gates
+
+- Runtime check confirms six preset thumbnails: `极光`, `雪街`, `雪夜`, `AI 面孔`, `白色`, `黑色`.
+- Runtime check confirms white and black preset selections load with `background.ready === 1`.
+- Browser capture has no console warnings or errors.
+- GIF dimensions and frame count are recorded.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v30-solid-background-presets-check.json`
+- `eval/evidence/siri-v30-solid-background-presets.png`
+- `eval/evidence/siri-v30-white-background.png`
+- `eval/evidence/siri-v30-black-background.png`
+- `eval/evidence/readme-media-v30-capture-report.json`
+- `docs/media/desktop-idle.png`
+- `docs/media/desktop-listening.png`
+- `docs/media/desktop-thinking.png`
+- `docs/media/desktop-reply.png`
+- `docs/media/mobile-idle.png`
+- `docs/media/orb-demo.gif`
+
 ## Light Boundary Softness Retarget Addendum
 
 ### Work Target

@@ -29,7 +29,7 @@ Readers who inspect or fork the project on GitHub, including developers studying
 - Do not describe the project as OSI open source while the license is source-available and non-commercial.
 - Keep Shadertoy provenance visible when shader attribution is discussed.
 - Keep any additional public reference attribution that is still represented by copied, ported, or adapted code.
-- State that the included background images are personal demo assets and not licensed for standalone reuse or commercial use.
+- State that the included personal background images are personal demo assets and not licensed for standalone reuse or commercial use; distinguish generated solid-color presets from those personal images.
 - Do not imply affiliation with Apple, Siri, Shadertoy, or any referenced author.
 - Keep bilingual statements semantically aligned; do not let the Chinese text loosen the English license, or the English text omit Chinese-facing restrictions.
 
