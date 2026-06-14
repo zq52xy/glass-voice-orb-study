@@ -331,3 +331,38 @@ Ensure the already-updated reply padding rule reaches GitHub Pages users by cach
 
 - `eval/evidence/siri-v28-css-cache-bust-reply.png`
 - `eval/evidence/siri-v28-css-cache-bust-check.json`
+
+## README Media Refresh Addendum
+
+### Work Target
+
+Refresh the GitHub README and curated preview media so the repository landing page reflects the current `v=28` glass orb, reply container, and tuning surface.
+
+### Done Definition
+
+- README preview text states the assets are captured from the current GitHub Pages build with the tuning panel hidden.
+- README desktop preview includes idle, listening, thinking, and reply states.
+- README feature list mentions the morphing reply container.
+- README feature list mentions tunable shadow, caustic, offsets, and boundary softness.
+- README GIF is regenerated from the current app and includes the reply container segment.
+- README screenshots are regenerated from the current app.
+- Public media remains under `docs/media/`.
+
+### Gates
+
+- Capture report confirms `?media=1&v=28&tuner=0`.
+- Capture report confirms `styles.css?v=28`.
+- Capture report has no console warnings or errors.
+- GIF dimensions and frame count are recorded.
+- README references only existing media files.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/readme-media-v28-capture-report.json`
+- `docs/media/desktop-idle.png`
+- `docs/media/desktop-listening.png`
+- `docs/media/desktop-thinking.png`
+- `docs/media/desktop-reply.png`
+- `docs/media/mobile-idle.png`
+- `docs/media/orb-demo.gif`

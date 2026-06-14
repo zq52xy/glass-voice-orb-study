@@ -475,6 +475,35 @@ Pass.
 - README media was not regenerated because the visual source rule was unchanged; this pass only fixed browser cache delivery.
 - Final status: pass.
 
+## README Media Refresh
+
+- User requested updating the GitHub README and refreshing screenshots/GIF.
+- Updated `README.md`:
+  - notes that preview assets are captured from the current GitHub Pages build with the tuning panel hidden;
+  - adds a `Reply / 回复` desktop preview using `docs/media/desktop-reply.png`;
+  - adds bilingual feature bullets for the morphing glass reply container;
+  - adds bilingual feature bullets for tunable exterior shadow, caustic projection, offsets, and boundary softness.
+- Regenerated README media from `?media=1&v=28&tuner=0`:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/desktop-reply.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif`
+- Capture report:
+  - `eval/evidence/readme-media-v28-capture-report.json`
+- Capture report confirmed:
+  - default background is `aurora-glass-ball.webp`;
+  - active preset title is `极光`;
+  - four presets remain available;
+  - tuning panel is hidden for media capture;
+  - loaded stylesheet is `styles.css?v=28`;
+  - projection defaults remain `projectionSoftness 4.2`, `shadowAmount 0.4`, `causticAmount 1.6`, `shadowOffsetY 0.3`, `causticOffsetY -1`;
+  - browser console warnings/errors were empty.
+- GIF verification:
+  - `docs/media/orb-demo.gif` is `520x320`, 64 frames, 4.57 seconds, 813874 bytes.
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.

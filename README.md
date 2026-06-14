@@ -34,19 +34,27 @@ http://127.0.0.1:4173/
 
 ## Preview / 预览
 
+The preview assets below are captured from the current GitHub Pages build with the tuning panel hidden.
+
+以下预览素材来自当前 GitHub Pages 构建，并隐藏调参面板后捕获。
+
 Interaction demo:
 
 交互动图：
 
 ![Glass voice orb interaction demo](./docs/media/orb-demo.gif)
 
-Desktop states:
+Desktop states and reply container:
 
-桌面状态：
+桌面状态与回复容器：
 
-| Idle / 待机 | Listening / 聆听 | Thinking / 思考 |
-| --- | --- | --- |
-| ![Desktop idle glass orb](./docs/media/desktop-idle.png) | ![Desktop listening wave](./docs/media/desktop-listening.png) | ![Desktop thinking dots](./docs/media/desktop-thinking.png) |
+| Idle / 待机 | Listening / 聆听 |
+| --- | --- |
+| ![Desktop idle glass orb](./docs/media/desktop-idle.png) | ![Desktop listening wave](./docs/media/desktop-listening.png) |
+
+| Thinking / 思考 | Reply / 回复 |
+| --- | --- |
+| ![Desktop thinking dots](./docs/media/desktop-thinking.png) | ![Desktop reply glass container](./docs/media/desktop-reply.png) |
 
 Mobile:
 
@@ -60,12 +68,16 @@ Mobile:
 - WebGL2 多通道玻璃渲染。
 - Voice-orb idle, listening, and thinking states.
 - 语音球的待机、聆听和思考状态。
+- Morphing glass reply container with centered assistant copy.
+- 可形变的玻璃回复容器，并居中显示助手回复。
 - Optional microphone-reactive animation with demo fallback.
 - 可选麦克风响应动画，并带有演示 fallback。
 - Included personal background presets for the demo.
 - 内置多个个人背景预设。
 - In-browser tuning panel. Press `H` to hide or show it.
 - 浏览器内调参面板，按 `H` 隐藏或显示。
+- Tunable exterior shadow, caustic projection, vertical offsets, and boundary softness.
+- 可调节外部阴影、底部焦散、上下偏移和边界柔化。
 
 ## License / 许可
 
