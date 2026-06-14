@@ -18,6 +18,7 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
   window.SIRI_STATE = state;
   const meter = new window.SiriAudioMeter();
   const LONG_PRESS_MS = 360;
+  const DEFAULT_REPLY = "我是智能助手，有什么可以帮到您？";
   let releaseTimer = 0;
   let pressTimer = 0;
   let clickArmed = false;
@@ -72,7 +73,7 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
     setDialog("idle");
     setMessage("Thinking...", "Thinking.");
     window.clearTimeout(releaseTimer);
-    releaseTimer = window.setTimeout(() => openReply(replyText || "我在这里。"), 1200);
+    releaseTimer = window.setTimeout(() => openReply(replyText || DEFAULT_REPLY), 1200);
   }
 
   async function enterListening() {
@@ -123,7 +124,7 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
     event.preventDefault();
     window.clearTimeout(pressTimer);
     if (state.mode === "listening") {
-      enterThinking("我在这里。");
+      enterThinking(DEFAULT_REPLY);
     } else if (clickArmed) {
       openAsk();
     }
@@ -150,7 +151,7 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
     }
     if ((event.code === "Space" || event.code === "Enter") && state.mode === "listening") {
       event.preventDefault();
-      enterThinking("我在这里。");
+      enterThinking(DEFAULT_REPLY);
     }
   }
 
@@ -161,7 +162,7 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
       return;
     }
     askInput.blur();
-    enterThinking(`关于“${question}”，我在这里。`);
+    enterThinking(`关于“${question}”，${DEFAULT_REPLY}`);
   });
   ["pointerdown", "pointerup"].forEach((type) => dialog.addEventListener(type, (event) => event.stopPropagation()));
   canvas.addEventListener("pointerdown", onPointerDown);
@@ -171,7 +172,7 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
     clickArmed = false;
     window.clearTimeout(pressTimer);
     if (state.mode === "listening") {
-      enterThinking("我在这里。");
+      enterThinking(DEFAULT_REPLY);
     }
   });
   window.addEventListener("keydown", onKeyDown);

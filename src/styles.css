@@ -136,9 +136,14 @@ body {
   pointer-events: auto;
 }
 
-.siri-dialog[data-mode="ask"] .siri-ask,
-.siri-dialog[data-mode="reply"] .siri-answer {
+.siri-dialog[data-mode="ask"] .siri-ask {
   opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0.18s;
+}
+
+.siri-dialog[data-mode="reply"] .siri-answer {
+  opacity: 0.9;
   pointer-events: auto;
   transition-delay: 0.18s;
 }
@@ -161,7 +166,7 @@ body {
 }
 
 .siri-answer {
-  padding: 0 30px;
+  padding: 0;
   max-height: 104px;
   overflow: hidden;
   white-space: pre-wrap;

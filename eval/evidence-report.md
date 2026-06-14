@@ -419,6 +419,41 @@ Pass.
   - `eval/evidence/readme-media-v26-capture-report.json`
 - Final status: pass.
 
+## Reply Copy And Projection Boundary Softness
+
+- Applied browser annotation for `p#siri-answer`:
+  - reply text changed from `我在这里。` to `我是智能助手，有什么可以帮到您？`;
+  - reply answer padding left/right changed from `30px` to `0px`;
+  - visible reply answer opacity changed from `1` to `0.9`.
+- Updated `src/main.js` so the real listening/reply flow uses a shared `DEFAULT_REPLY` string.
+- Updated `src/styles.css` so reply opacity is separate from ask opacity.
+- Added projection boundary softness:
+  - `src/tuner.js` exposes `projectionSoftness` / `边界柔化`;
+  - `src/uniforms.js` passes `uProjectionSoftness`;
+  - `src/shaders/glass.frag.glsl` uses `uProjectionSoftness` to widen the glass edge alpha blend and soften the shadow/bright-interior boundary.
+- Default `projectionSoftness` is `4.2` with range `1-12` and step `0.1`.
+- Bumped script cache query values to `v=27`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v27-reply-softness.png`
+  - `eval/evidence/siri-v27-reply-softness-check.json`
+- Runtime check confirmed:
+  - actual long-press reply flow displays `我是智能助手，有什么可以帮到您？`;
+  - answer padding left/right are `0px`;
+  - answer opacity is `0.9`;
+  - `边界柔化` slider exists with value `4.2`, range `1-12`, and step `0.1`;
+  - `uProjectionSoftness` uniform value is `4.2` at DPR 1;
+  - ask dialog still opens with a `500 x 150` panel;
+  - browser console warnings/errors were empty.
+- Regenerated README media from `?media=1&v=27&tuner=0`:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 670534 bytes)
+- Capture report from the successful pass had no console warnings:
+  - `eval/evidence/readme-media-v27-capture-report.json`
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.

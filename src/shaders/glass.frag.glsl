@@ -30,6 +30,7 @@ uniform float uShadowAmount;
 uniform float uCausticAmount;
 uniform float uShadowOffsetY;
 uniform float uCausticOffsetY;
+uniform float uProjectionSoftness;
 uniform float uBackgroundReady;
 
 out vec4 outColor;
@@ -186,7 +187,8 @@ vec4 glassFragment(vec2 pixel) {
 	vec2 halfSize = uPanelSize * 0.5 - vec2(uMarginPx);
 	vec2 p = (panelUv - vec2(0.5)) * uPanelSize;
 	float d = shapeDistance(p, halfSize, uCornerRadius);
-	float alpha = 1.0 - smoothstep(-1.0, 1.0, d);
+	float edgeSoftness = max(uProjectionSoftness, 1.0);
+	float alpha = 1.0 - smoothstep(-edgeSoftness, edgeSoftness, d);
 	if (alpha <= 0.001) return vec4(0.0);
 
 	vec2 grad = shapeGradient(p, halfSize, uCornerRadius, uGradRadialMix);

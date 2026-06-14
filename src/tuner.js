@@ -29,6 +29,7 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
         { key: "causticAmount", label: "底部焦散", min: 0, max: 1.6, step: 0.01, def: 1.6 },
         { key: "shadowOffsetY", label: "阴影上下", min: -1, max: 1, step: 0.01, def: 0.3 },
         { key: "causticOffsetY", label: "焦散上下", min: -1, max: 1, step: 0.01, def: -1 },
+        { key: "projectionSoftness", label: "边界柔化", min: 1, max: 12, step: 0.1, def: 4.2 },
       ],
     },
     {

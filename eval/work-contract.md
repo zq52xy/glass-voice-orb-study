@@ -272,3 +272,35 @@ Use the user-approved tuning values as the default projection parameters for the
 - `eval/evidence/siri-v26-default-params-dialog.png`
 - `eval/evidence/siri-v26-default-params-check.json`
 - `eval/evidence/readme-media-v26-capture-report.json`
+
+## Reply Copy And Projection Boundary Softness Addendum
+
+### Work Target
+
+Apply the browser annotation for the reply text and reduce the visible hard edge between the exterior shadow and the bright glass interior, with a tunable softness control.
+
+### Done Definition
+
+- Default reply text changes from `我在这里。` to `我是智能助手，有什么可以帮到您？`.
+- Reply answer padding is `0px` left/right.
+- Reply answer visible opacity is `0.9`.
+- Glass edge alpha uses a tunable `projectionSoftness` value.
+- The tuning panel exposes `projectionSoftness` as `边界柔化`.
+- Uniform fallback and tuner default for `projectionSoftness` are both `4.2`.
+- Script cache query values are bumped so GitHub Pages receives the updated behavior.
+
+### Gates
+
+- Runtime check confirms the real reply flow displays the new copy.
+- Runtime check confirms answer padding left/right are `0px` and opacity is `0.9`.
+- Runtime check confirms the `边界柔化` slider exists with value `4.2`, range `1-12`, and step `0.1`.
+- Runtime check confirms `uProjectionSoftness` is passed to the shader.
+- Browser capture has no console warnings or errors.
+- README media is regenerated from the current app.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v27-reply-softness.png`
+- `eval/evidence/siri-v27-reply-softness-check.json`
+- `eval/evidence/readme-media-v27-capture-report.json`
