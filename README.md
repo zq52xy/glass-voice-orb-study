@@ -76,8 +76,8 @@ Mobile:
 - 内置多个个人背景预设。
 - In-browser tuning panel. Press `H` to hide or show it.
 - 浏览器内调参面板，按 `H` 隐藏或显示。
-- Tunable exterior shadow, caustic projection, vertical offsets, and boundary softness.
-- 可调节外部阴影、底部焦散、上下偏移和边界柔化。
+- Tunable exterior shadow, caustic projection, vertical offsets, and light/shadow boundary softness.
+- 可调节外部阴影、底部焦散、上下偏移和光影边界柔化。
 
 ## License / 许可
 

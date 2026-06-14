@@ -504,6 +504,42 @@ Pass.
   - `docs/media/orb-demo.gif` is `520x320`, 64 frames, 4.57 seconds, 813874 bytes.
 - Final status: pass.
 
+## Light Boundary Softness Retarget
+
+- User clarified that the softness target was wrong: it should soften the visible light/shadow boundary in the shown ask container, not the outer container edge.
+- Updated `src/shaders/glass.frag.glsl`:
+  - restored glass shape alpha to `smoothstep(-1.0, 1.0, d)`;
+  - removed `projectionSoftness` from the capsule outline alpha;
+  - applied `uProjectionSoftness` to the white highlight band anti-alias width;
+  - applied `uProjectionSoftness` to the exterior shadow edge and caustic lower-mask transition.
+- Updated `src/tuner.js` label from `边界柔化` to `光影边界` to match the corrected target.
+- Bumped script and stylesheet cache query values to `v=29`.
+- Updated `README.md` feature wording to `light/shadow boundary softness` / `光影边界柔化`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v29-light-boundary-ask.png`
+  - `eval/evidence/siri-v29-light-boundary-check.json`
+- Runtime check confirmed:
+  - real short-click ask flow opens the ask container;
+  - ask panel remains approximately `500 x 150`;
+  - `光影边界` slider exists with value `4.2`, range `1-12`, and step `0.1`;
+  - `uProjectionSoftness` uniform remains `4.2`;
+  - shader source has restored fixed alpha edge;
+  - shader source no longer uses `smoothstep(-edgeSoftness, edgeSoftness, d)`;
+  - shader source applies `uProjectionSoftness` to highlight/projection math;
+  - browser console warnings/errors were empty.
+- Regenerated README media from `?media=1&v=29&tuner=0`:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/desktop-reply.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif`
+- Capture report:
+  - `eval/evidence/readme-media-v29-capture-report.json`
+- GIF verification:
+  - `docs/media/orb-demo.gif` is `520x320`, 64 frames, 4.57 seconds, 815006 bytes.
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.

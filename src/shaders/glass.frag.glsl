@@ -146,7 +146,7 @@ float highlightBand(float d, vec2 grad) {
 	float glen = max(length(grad), 0.0001);
 	float dist = -d / glen;
 	vec2 n = grad / glen;
-	float aa = max(fwidth(dist), 0.0001);
+	float aa = max(max(fwidth(dist), 0.0001), uProjectionSoftness * 0.32);
 	vec2 kdir = vec2(cos(uKeyAngle), sin(uKeyAngle));
 	vec2 fdir = vec2(cos(uFillAngle), sin(uFillAngle));
 	float key = highlightLobe(dist, aa, n, uHlHeight, kdir, uHlCut, uHlCurv);
@@ -161,7 +161,8 @@ vec3 outsideProjection(vec2 p, vec2 halfSize, float cornerRadius) {
 	float aspect = max(halfSize.x / max(halfSize.y, 1.0), 1.0);
 	vec2 shadowP = p - vec2(0.0, uShadowOffsetY * r);
 	float shadowD = shapeDistance(shadowP, halfSize, cornerRadius);
-	float shadowOutside = smoothstep(-2.0, 14.0, shadowD);
+	float seamSoftness = max(uProjectionSoftness, 1.0);
+	float shadowOutside = smoothstep(-seamSoftness, 14.0 + seamSoftness, shadowD);
 	float shadowBlur = exp(-max(shadowD, 0.0) * max(shadowD, 0.0) / max(r * r * 0.78, 1.0));
 	vec2 sn = shadowP / max(halfSize, vec2(1.0));
 	float topBias = smoothstep(0.45, -0.85, sn.y);
@@ -174,7 +175,8 @@ vec3 outsideProjection(vec2 p, vec2 halfSize, float cornerRadius) {
 	float caustic = exp(-(q.x * q.x * 1.65 + q.y * q.y * 1.95));
 	float core = exp(-(q.x * q.x * 5.0 + q.y * q.y * 5.5));
 	vec2 n = p / max(halfSize, vec2(1.0));
-	float under = smoothstep(0.02, 0.9, n.y);
+	float seam = seamSoftness / r;
+	float under = smoothstep(0.02 - seam * 0.7, 0.9 + seam * 0.9, n.y);
 	vec3 glow = vec3(1.0, 0.82, 0.46) * caustic + vec3(0.78, 0.9, 1.0) * core * 0.34;
 	return glow * under * uCausticAmount - vec3(shadow * uShadowAmount);
 }
@@ -187,8 +189,7 @@ vec4 glassFragment(vec2 pixel) {
 	vec2 halfSize = uPanelSize * 0.5 - vec2(uMarginPx);
 	vec2 p = (panelUv - vec2(0.5)) * uPanelSize;
 	float d = shapeDistance(p, halfSize, uCornerRadius);
-	float edgeSoftness = max(uProjectionSoftness, 1.0);
-	float alpha = 1.0 - smoothstep(-edgeSoftness, edgeSoftness, d);
+	float alpha = 1.0 - smoothstep(-1.0, 1.0, d);
 	if (alpha <= 0.001) return vec4(0.0);
 
 	vec2 grad = shapeGradient(p, halfSize, uCornerRadius, uGradRadialMix);

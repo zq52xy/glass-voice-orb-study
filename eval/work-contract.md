@@ -366,3 +366,42 @@ Refresh the GitHub README and curated preview media so the repository landing pa
 - `docs/media/desktop-reply.png`
 - `docs/media/mobile-idle.png`
 - `docs/media/orb-demo.gif`
+
+## Light Boundary Softness Retarget Addendum
+
+### Work Target
+
+Retarget the exposed softness control away from the glass container outline and onto the visible light/shadow boundary indicated by the user screenshot.
+
+### Done Definition
+
+- Glass shape alpha returns to the original fixed `smoothstep(-1.0, 1.0, d)` edge.
+- `projectionSoftness` no longer softens the whole capsule outline.
+- `projectionSoftness` softens the white highlight band edge.
+- `projectionSoftness` softens exterior shadow and caustic lower-mask transitions.
+- Tuning label changes from `边界柔化` to `光影边界`.
+- Script and stylesheet query values are bumped to `v=29`.
+- README feature wording uses light/shadow boundary softness.
+- README media is regenerated from the current app.
+
+### Gates
+
+- Runtime check confirms the ask container opens and still uses the `500 x 150` panel.
+- Runtime check confirms the `光影边界` slider exists with value `4.2`, range `1-12`, and step `0.1`.
+- Runtime check confirms shader source restored fixed alpha edge and removed alpha-edge softness.
+- Runtime check confirms shader source applies `uProjectionSoftness` to highlight/projection math.
+- Browser capture has no console warnings or errors.
+- GIF dimensions and frame count are recorded.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v29-light-boundary-ask.png`
+- `eval/evidence/siri-v29-light-boundary-check.json`
+- `eval/evidence/readme-media-v29-capture-report.json`
+- `docs/media/desktop-idle.png`
+- `docs/media/desktop-listening.png`
+- `docs/media/desktop-thinking.png`
+- `docs/media/desktop-reply.png`
+- `docs/media/mobile-idle.png`
+- `docs/media/orb-demo.gif`
