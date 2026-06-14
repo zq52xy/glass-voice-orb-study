@@ -209,3 +209,34 @@ Make the bottom caustic projection rounder, closer to the external soft shadow s
 - `eval/evidence/siri-v24-round-caustic-default.png`
 - `eval/evidence/siri-v24-round-caustic-dialog.png`
 - `eval/evidence/siri-v24-round-caustic-check.json`
+
+## Unified Shape Projection Addendum
+
+### Work Target
+
+Make the external shadow and bottom caustic behave like projections of the same morphing glass container, instead of separate fixed layers that drift or flatten during the ball-to-dialog transition.
+
+### Done Definition
+
+- The external shadow is based on the shifted rounded-shape distance field, so vertical offset moves the whole projected shadow.
+- The old rim feather and newer soft shadow are unified into one shape-driven projection.
+- The bottom caustic follows the same container center/short-edge basis and uses only limited aspect stretch during dialog morph.
+- Existing shadow/caustic strength and vertical-position controls remain exposed.
+- Script cache query values are bumped so GitHub Pages receives the updated shader.
+
+### Gates
+
+- Runtime check confirms the default `aurora-glass-ball.webp` background and four presets.
+- Runtime check confirms the ask dialog still opens with the `500 x 150` panel.
+- Runtime check confirms `shadowOffsetY`, `causticOffsetY`, `shadowAmount`, and `causticAmount` are present.
+- Idle and dialog screenshots exist for review.
+- Browser capture has no console warnings or errors.
+- README media is regenerated from the current app.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v25-shape-projection-idle.png`
+- `eval/evidence/siri-v25-shape-projection-dialog.png`
+- `eval/evidence/siri-v25-shape-projection-check.json`
+- `eval/evidence/readme-media-v25-capture-report.json`

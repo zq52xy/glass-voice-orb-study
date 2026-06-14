@@ -155,28 +155,27 @@ float highlightBand(float d, vec2 grad) {
 	return keyN + fillN;
 }
 
-vec3 outsideProjection(vec2 p, vec2 halfSize, float d) {
-	float outside = smoothstep(-2.0, 12.0, d);
-	float edge = exp(-max(d, 0.0) * max(d, 0.0) / 2200.0);
-	vec2 n = p / max(halfSize, vec2(1.0));
-	float topBias = smoothstep(0.25, -0.85, n.y);
-	float rightBias = smoothstep(-0.55, 1.0, n.x);
-	float aspect = max(halfSize.x / max(halfSize.y, 1.0), 1.0);
-	float aspectAtten = 1.0 / (1.0 + max(aspect - 1.0, 0.0) * 0.22);
+vec3 outsideProjection(vec2 p, vec2 halfSize, float cornerRadius) {
 	float r = max(min(halfSize.x, halfSize.y), 1.0);
-	vec2 s = vec2(0.14 * halfSize.x, -0.2 * r + uShadowOffsetY * r);
-	vec2 sq = (p - s) / max(r * 1.18, 1.0);
-	float diskShadow = exp(-dot(sq, sq) * 1.45);
-	float rimShadow = edge * (0.2 + 0.22 * topBias + 0.14 * rightBias);
-	float shadow = outside * aspectAtten * (rimShadow + diskShadow * 0.46);
+	float aspect = max(halfSize.x / max(halfSize.y, 1.0), 1.0);
+	vec2 shadowP = p - vec2(0.0, uShadowOffsetY * r);
+	float shadowD = shapeDistance(shadowP, halfSize, cornerRadius);
+	float shadowOutside = smoothstep(-2.0, 14.0, shadowD);
+	float shadowBlur = exp(-max(shadowD, 0.0) * max(shadowD, 0.0) / max(r * r * 0.78, 1.0));
+	vec2 sn = shadowP / max(halfSize, vec2(1.0));
+	float topBias = smoothstep(0.45, -0.85, sn.y);
+	float sideBias = smoothstep(0.18, 1.0, abs(sn.x));
+	float shadow = shadowOutside * shadowBlur * (0.24 + 0.14 * topBias + 0.05 * sideBias);
 
-	vec2 c = vec2(0.0, halfSize.y + r * (0.28 + uCausticOffsetY));
-	vec2 q = vec2((p.x - c.x) / max(r * 0.95, 1.0), (p.y - c.y) / max(r * 0.82, 1.0));
-	float caustic = exp(-(q.x * q.x * 1.55 + q.y * q.y * 1.95));
-	float core = exp(-(q.x * q.x * 4.6 + q.y * q.y * 5.2));
-	float under = smoothstep(0.0, 0.85, n.y);
+	float morphStretch = min(sqrt(aspect), 1.85);
+	vec2 c = vec2(0.0, halfSize.y + r * (0.34 + uCausticOffsetY));
+	vec2 q = vec2((p.x - c.x) / max(r * 0.92 * morphStretch, 1.0), (p.y - c.y) / max(r * 0.82, 1.0));
+	float caustic = exp(-(q.x * q.x * 1.65 + q.y * q.y * 1.95));
+	float core = exp(-(q.x * q.x * 5.0 + q.y * q.y * 5.5));
+	vec2 n = p / max(halfSize, vec2(1.0));
+	float under = smoothstep(0.02, 0.9, n.y);
 	vec3 glow = vec3(1.0, 0.82, 0.46) * caustic + vec3(0.78, 0.9, 1.0) * core * 0.34;
-	return glow * under * outside * uCausticAmount - vec3(shadow * uShadowAmount);
+	return glow * under * uCausticAmount - vec3(shadow * uShadowAmount);
 }
 
 vec4 glassFragment(vec2 pixel) {
@@ -210,8 +209,7 @@ void main() {
 	vec2 panelUv = (pixel - uPanelOrigin) / uPanelSize;
 	vec2 halfSize = uPanelSize * 0.5 - vec2(uMarginPx);
 	vec2 p = (panelUv - vec2(0.5)) * uPanelSize;
-	float d = shapeDistance(p, halfSize, uCornerRadius);
-	background = clamp(background + outsideProjection(p, halfSize, d), 0.0, 1.25);
+	background = clamp(background + outsideProjection(p, halfSize, uCornerRadius), 0.0, 1.25);
 	vec4 glass = glassFragment(pixel);
 	vec3 finalColor = mix(background, clamp(glass.rgb, 0.0, 1.25), saturate(glass.a));
 	outColor = vec4(finalColor, 1.0);

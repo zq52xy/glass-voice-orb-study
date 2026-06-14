@@ -356,6 +356,37 @@ Pass.
 - Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - Final status: pass.
 
+## Unified Shape Projection
+
+- User clarified that the external shadow vertical offset was only moving the newly added shadow layer, while the prior feather still behaved like a container expansion; the new caustic/shadow also did not follow the morphing container together.
+- Updated `src/shaders/glass.frag.glsl`:
+  - replaced the split rim-plus-disk shadow with one shifted rounded-shape distance field;
+  - made `shadowOffsetY` move the entire projected shadow field instead of only one sub-layer;
+  - kept the caustic centered under the same morphing container and based it on the short edge, with only limited aspect stretch for dialog mode;
+  - lowered the default exterior shadow strength to reduce the black-block look in dialog mode.
+- Updated `src/tuner.js` and `src/uniforms.js` default `shadowAmount` to `0.38`.
+- Bumped script cache query values to `v=25`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v25-shape-projection-idle.png`
+  - `eval/evidence/siri-v25-shape-projection-dialog.png`
+  - `eval/evidence/siri-v25-shape-projection-check.json`
+- Runtime check confirmed:
+  - default background is `aurora-glass-ball.webp`;
+  - active preset title is `极光`;
+  - four presets remain available;
+  - ask dialog still opens with a `500 x 150` panel;
+  - `shadowOffsetY`, `causticOffsetY`, `shadowAmount`, and `causticAmount` are present;
+  - browser console warnings/errors were empty.
+- Regenerated README media from `?media=1&v=25&tuner=0`:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 683019 bytes)
+- Capture report from the successful pass had no console warnings:
+  - `eval/evidence/readme-media-v25-capture-report.json`
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.
