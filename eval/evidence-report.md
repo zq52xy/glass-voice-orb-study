@@ -288,6 +288,41 @@ Pass.
 - Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
 - Final status: pass.
 
+## Projection And Default Wallpaper
+
+- User provided a reference image emphasizing:
+  - bottom caustic projection under the glass;
+  - external feathered black shadow outside the glass;
+  - the newly added wallpaper should become the default image.
+- Updated `src/backgrounds.js` so `aurora-glass-ball.webp` / `极光` is the first and default preset.
+- Updated `src/shaders/glass.frag.glsl` with shape-aware projection math:
+  - `outsideProjection()` adds an exterior feathered black projection around the current glass shape;
+  - the same function adds a warm white/gold bottom caustic with a small cool core;
+  - projection uses `uPanelOrigin`, `uPanelSize`, `uMarginPx`, and `uCornerRadius`, so it follows both ball and dialog morph states.
+- Updated `src/tuner.js` and `src/uniforms.js` to expose:
+  - `shadowAmount` / `外部阴影` default `0.46`;
+  - `causticAmount` / `底部焦散` default `0.56`.
+- Bumped script cache query values to `v=23`.
+- Runtime verification wrote:
+  - `eval/evidence/siri-v23-caustic-shadow-default.png`
+  - `eval/evidence/siri-v23-caustic-shadow-dialog.png`
+  - `eval/evidence/siri-v23-caustic-shadow-check.json`
+- Runtime check confirmed:
+  - default background `./assets/aurora-glass-ball.webp`;
+  - active preset title `极光`;
+  - four presets remain available;
+  - shadow and caustic controls exist in the tuner;
+  - dialog morph still opens with a `500 x 150` panel;
+  - browser console warnings/errors were empty.
+- Regenerated README media from `?media=1&v=23`:
+  - `docs/media/desktop-idle.png`
+  - `docs/media/desktop-listening.png`
+  - `docs/media/desktop-thinking.png`
+  - `docs/media/mobile-idle.png`
+  - `docs/media/orb-demo.gif` (360x360, 52 frames, 289710 bytes)
+- Capture report from the successful pass had no console warnings; transient JSON report was removed from public media.
+- Final status: pass.
+
 ## Dialog Morph Restore
 
 - User pointed out the reference includes a glass morph into a UI dialog container.

@@ -152,3 +152,33 @@ Set the default dialog container height to `110` and restore the missing authori
 - `eval/evidence/siri-v22-dialog-height-110.png`
 - `eval/evidence/siri-v22-aurora-preset.png`
 - `eval/evidence/siri-v22-height-preset-check.json`
+
+## Projection And Default Wallpaper Addendum
+
+### Work Target
+
+Use the newly added `极光` preset as the default wallpaper and add the reference-style bottom caustic projection plus external feathered black shadow to the glass surface.
+
+### Done Definition
+
+- `aurora-glass-ball.webp` is the first/default background preset.
+- The glass shader draws a soft black exterior projection around the shape.
+- The glass shader draws a warm bottom caustic projection below the shape.
+- Shadow and caustic strength are exposed in the tuning panel.
+- The projection follows both the idle ball and the expanded dialog shape.
+- Script cache query values are bumped so GitHub Pages receives the updated shader.
+
+### Gates
+
+- Runtime check confirms default background is `极光`.
+- Runtime check confirms four presets remain available.
+- Runtime check confirms shadow/caustic tuning controls exist.
+- Idle and dialog screenshots exist for review.
+- Browser console has no warnings or errors.
+- `src/*.js` files remain within the project line-count limit.
+
+### Evidence Required
+
+- `eval/evidence/siri-v23-caustic-shadow-default.png`
+- `eval/evidence/siri-v23-caustic-shadow-dialog.png`
+- `eval/evidence/siri-v23-caustic-shadow-check.json`

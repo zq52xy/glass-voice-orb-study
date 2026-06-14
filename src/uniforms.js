@@ -131,6 +131,8 @@ POS: Pure uniform dictionary; no GL calls, no animation, no state transitions.
       uHlNorm: 8,
       uHlAmount: num("hlAmount", 0.72),
       uHlCurv: 1,
+      uShadowAmount: num("shadowAmount", 0.46),
+      uCausticAmount: num("causticAmount", 0.56),
       uBackgroundReady: r.background.ready,
     };
 

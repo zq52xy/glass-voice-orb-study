@@ -25,6 +25,8 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
         { key: "hlAmount", label: "高光亮度", min: 0, max: 2, step: 0.01, def: 0.72 },
         { key: "hlHeight", label: "高光宽度", min: 0.5, max: 6, step: 0.1, def: 2.2 },
         { key: "hlCut", label: "高光收束", min: 0, max: 0.95, step: 0.01, def: 0.52 },
+        { key: "shadowAmount", label: "外部阴影", min: 0, max: 1, step: 0.01, def: 0.46 },
+        { key: "causticAmount", label: "底部焦散", min: 0, max: 1.6, step: 0.01, def: 0.56 },
       ],
     },
     {

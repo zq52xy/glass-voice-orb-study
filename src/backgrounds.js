@@ -8,9 +8,9 @@ POS: Background-switching feature; reads window.SIRI_RENDERER, owns no GL state.
   const DIR = "./assets/";
   // 背景清单：个人学习用预设；新增背景在此登记即可。
   const LIST = [
+    { file: "aurora-glass-ball.webp", label: "极光" },
     { file: "0808bb244676405.699d0d0469a67.webp", label: "雪街" },
     { file: "4d53de244676405.699d0d046c4dc.webp", label: "雪夜" },
-    { file: "aurora-glass-ball.webp", label: "极光" },
     { file: "96bdad248714663.69fdafdc31e48.webp", label: "AI \u9762\u5b54" },
   ];
 

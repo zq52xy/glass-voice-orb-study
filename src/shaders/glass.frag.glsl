@@ -26,6 +26,8 @@ uniform float uHlNorm;
 uniform float uHlAmount;
 uniform float uHlCurv;
 
+uniform float uShadowAmount;
+uniform float uCausticAmount;
 uniform float uBackgroundReady;
 
 out vec4 outColor;
@@ -151,6 +153,25 @@ float highlightBand(float d, vec2 grad) {
 	return keyN + fillN;
 }
 
+vec3 outsideProjection(vec2 p, vec2 halfSize, float d) {
+	float outside = smoothstep(-2.0, 12.0, d);
+	float edge = exp(-max(d, 0.0) * max(d, 0.0) / 2200.0);
+	vec2 n = p / max(halfSize, vec2(1.0));
+	float topBias = smoothstep(0.25, -0.85, n.y);
+	float rightBias = smoothstep(-0.55, 1.0, n.x);
+	float aspect = max(halfSize.x / max(halfSize.y, 1.0), 1.0);
+	float aspectAtten = 1.0 / (1.0 + max(aspect - 1.0, 0.0) * 0.22);
+	float shadow = outside * edge * aspectAtten * (0.28 + 0.3 * topBias + 0.2 * rightBias);
+
+	vec2 c = vec2(0.0, halfSize.y + 0.08 * uPanelSize.y);
+	vec2 q = vec2((p.x - c.x) / max(halfSize.x * 0.9, 1.0), (p.y - c.y) / max(halfSize.y * 0.32, 1.0));
+	float caustic = exp(-(q.x * q.x * 3.1 + q.y * q.y * 9.0));
+	float core = exp(-(q.x * q.x * 10.0 + q.y * q.y * 28.0));
+	float under = smoothstep(0.0, 0.85, n.y);
+	vec3 glow = vec3(1.0, 0.82, 0.46) * caustic + vec3(0.78, 0.9, 1.0) * core * 0.34;
+	return glow * under * outside * uCausticAmount - vec3(shadow * uShadowAmount);
+}
+
 vec4 glassFragment(vec2 pixel) {
 	vec2 panelUv = (pixel - uPanelOrigin) / uPanelSize;
 	vec2 inQuad = step(vec2(0.0), panelUv) * step(panelUv, vec2(1.0));
@@ -179,6 +200,11 @@ void main() {
 	// outside the glass: original photo (so the dark container stays INSIDE the glass and never
 	// spills past it). The container + wave/dots live in the scene and are only seen refracted inside.
 	vec3 background = sampleBackground(canvasUv);
+	vec2 panelUv = (pixel - uPanelOrigin) / uPanelSize;
+	vec2 halfSize = uPanelSize * 0.5 - vec2(uMarginPx);
+	vec2 p = (panelUv - vec2(0.5)) * uPanelSize;
+	float d = shapeDistance(p, halfSize, uCornerRadius);
+	background = clamp(background + outsideProjection(p, halfSize, d), 0.0, 1.25);
 	vec4 glass = glassFragment(pixel);
 	vec3 finalColor = mix(background, clamp(glass.rgb, 0.0, 1.25), saturate(glass.a));
 	outColor = vec4(finalColor, 1.0);
