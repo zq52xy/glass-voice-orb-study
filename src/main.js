@@ -38,6 +38,16 @@ POS: App coordinator only; keeps DOM overlay geometry aligned with renderer layo
 
   function syncDialogLayout() {
     document.documentElement.style.setProperty("--dialog-inline", `${responsiveDialogWidth()}px`);
+    const params = window.SIRI_PARAMS;
+    if (!params) {
+      return;
+    }
+    if (typeof params.caretGlowSize === "number") {
+      document.documentElement.style.setProperty("--caret-glow-size", `${params.caretGlowSize}px`);
+    }
+    if (typeof params.caretGlowAlpha === "number") {
+      document.documentElement.style.setProperty("--caret-glow-alpha", `${params.caretGlowAlpha}`);
+    }
   }
 
   function setMessage(text, hiddenText) {

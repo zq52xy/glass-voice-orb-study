@@ -12,9 +12,11 @@ POS: Presentation layer only; mirrors renderer dialog sizing through shared view
   --shadow: rgba(0, 0, 0, 0.58);
   --dialog-inline: min(clamp(20rem, 44vw, 35rem), calc(100vw - 3rem));
   --dialog-edge-gap: 3rem;
-  --dialog-caret-gap: 2rem;
+  --dialog-caret-gap: 10px;
   --dialog-control-gap: calc(var(--dialog-edge-gap) + var(--dialog-caret-gap));
   --dialog-reply-pad: 30px;
+  --caret-glow-size: 90px;
+  --caret-glow-alpha: 1;
 }
 
 *,
@@ -93,25 +95,48 @@ body {
   padding: 0 var(--dialog-control-gap) 0 var(--dialog-control-gap);
 }
 
-.siri-ask::before {
+.siri-ask::before,
+.siri-ask::after {
   content: "";
   position: absolute;
   left: var(--dialog-edge-gap);
   top: 50%;
-  width: 3px;
-  height: 36px;
-  border-radius: 999px;
-  transform: translateY(-50%);
-  background: linear-gradient(180deg, #fff6a8 0%, #fff 38%, #74f3ff 62%, #665cff 100%);
-  box-shadow:
-    0 0 8px rgba(255, 236, 156, 0.9),
-    0 0 14px rgba(93, 230, 255, 0.85),
-    0 0 22px rgba(118, 94, 255, 0.7);
   opacity: 0;
+  pointer-events: none;
   animation: caret-glow 1.45s ease-in-out infinite;
 }
 
-.siri-dialog[data-mode="ask"] .siri-ask::before {
+.siri-ask::before {
+  width: calc(var(--caret-glow-size) * 0.58);
+  height: calc(var(--caret-glow-size) * 0.84);
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(ellipse at center,
+      rgba(255, 255, 255, calc(var(--caret-glow-alpha) * 0.86)) 0%,
+      rgba(255, 238, 162, calc(var(--caret-glow-alpha) * 0.72)) 18%,
+      rgba(93, 230, 255, calc(var(--caret-glow-alpha) * 0.62)) 42%,
+      rgba(118, 94, 255, calc(var(--caret-glow-alpha) * 0.38)) 64%,
+      rgba(93, 230, 255, 0) 100%);
+  filter: blur(12px);
+  mix-blend-mode: screen;
+}
+
+.siri-ask::after {
+  width: 4px;
+  height: 42px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(180deg, #fff6a8 0%, #fff 38%, #74f3ff 62%, #665cff 100%);
+  box-shadow:
+    0 0 10px rgba(255, 236, 156, 0.95),
+    0 0 20px rgba(93, 230, 255, 0.9),
+    0 0 34px rgba(118, 94, 255, 0.78),
+    0 0 var(--caret-glow-size) rgba(93, 230, 255, var(--caret-glow-alpha));
+}
+
+.siri-dialog[data-mode="ask"] .siri-ask::before,
+.siri-dialog[data-mode="ask"] .siri-ask::after {
   opacity: 1;
 }
 
@@ -180,11 +205,11 @@ body {
 @keyframes caret-glow {
   0%, 100% {
     opacity: 0.45;
-    transform: translateY(-50%) scaleY(0.92);
+    transform: translate(-50%, -50%) scaleY(0.92);
   }
   50% {
     opacity: 1;
-    transform: translateY(-50%) scaleY(1.08);
+    transform: translate(-50%, -50%) scaleY(1.08);
   }
 }
 
@@ -277,7 +302,7 @@ body {
 @media (max-width: 520px) {
   :root {
     --dialog-edge-gap: 2rem;
-    --dialog-caret-gap: 1.5rem;
+    --dialog-caret-gap: 10px;
   }
 
   .siri-dialog {

@@ -5,7 +5,7 @@ OUTPUT: A floating dev panel that live-edits window.SIRI_PARAMS and emits parame
 POS: Optional tuning tool; renderer and DOM overlay layout subscribe to its shared parameters.
 */
 (function () {
-  // ---- 参数 schema：key / 中文标签 / 区间 / 步长 / 默认值（= siri27 原值）----
+  // ---- 参数 schema：key / 中文标签 / 区间 / 步长 / 默认值 ----
   const GROUPS = [
     {
       title: "容器（下半透明渐变）",
@@ -48,7 +48,7 @@ POS: Optional tuning tool; renderer and DOM overlay layout subscribe to its shar
       title: "光效",
       items: [
         { key: "waveAmplitude", label: "波形振幅", min: 0.05, max: 0.5, step: 0.01, def: 0.22 },
-        { key: "waveScale", label: "波形尺寸", min: 0.4, max: 1.4, step: 0.01, def: 0.9 },
+        { key: "waveScale", label: "波形尺度", min: 0.4, max: 1.4, step: 0.01, def: 0.9 },
         { key: "waveAberration", label: "波形色散", min: 0, max: 4, step: 0.01, def: 2.6 },
         { key: "waveThickness", label: "波形线宽", min: 1, max: 12, step: 0.1, def: 3 },
         { key: "waveIntensity", label: "波形亮度", min: 0.5, max: 16, step: 0.1, def: 2 },
@@ -57,10 +57,11 @@ POS: Optional tuning tool; renderer and DOM overlay layout subscribe to its shar
         { key: "waveSoftness", label: "柔化", min: 0, max: 8, step: 0.1, def: 2.5 },
         { key: "waveWhiteClip", label: "白色 Bloom", min: 0, max: 1, step: 0.01, def: 1 },
         { key: "dotGlow", label: "点辉光", min: 0.01, max: 0.15, step: 0.005, def: 0.055 },
+        { key: "caretGlowSize", label: "光标辉光半径", min: 48, max: 320, step: 1, def: 90 },
+        { key: "caretGlowAlpha", label: "光标辉光强度", min: 0, max: 1, step: 0.01, def: 1 },
       ],
     },
   ];
-
   const params = {};
   GROUPS.forEach((g) => g.items.forEach((it) => (params[it.key] = it.def)));
   window.SIRI_PARAMS = params;
@@ -116,7 +117,7 @@ POS: Optional tuning tool; renderer and DOM overlay layout subscribe to its shar
     });
     rows += `<div class="foot"><button id="t-copy">复制参数</button>` +
       `<button id="t-reset">重置</button></div>` +
-      `<div class="tip">调好后点「复制参数」，把 JSON 发给我固化进代码。</div></div>`;
+      `<div class="tip">调好后点“复制参数”，把 JSON 发给我固化进代码。</div></div>`;
     panel.innerHTML = rows;
     document.body.appendChild(panel);
 

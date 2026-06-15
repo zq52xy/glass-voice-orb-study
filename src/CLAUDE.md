@@ -8,9 +8,9 @@
 - `state.js`: spring state machine (idle/listening/thinking/dialog) ported from siri27; derives channels.
 - `renderer.js`: owns the effect->scene->glass draw order, responsive glass layout, background image, and resize.
 - `backgrounds.js`: owns the selectable background preset manifest, picker UI, WWDC26 second preset, and upload path.
-- `tuner.js`: default-visible tuning panel for shared visual/layout parameters; hide with `?tuner=0`.
+- `tuner.js`: default-visible tuning panel for shared visual/layout/caret-glow parameters; hide with `?tuner=0`.
 - `audio.js`: microphone permission, FFT low/mid/high band split, and demo fallback.
-- `main.js`: gesture wiring, dialog overlay flow, tuner layout sync, frame loop, and renderer/state/audio coordination.
+- `main.js`: gesture wiring, dialog overlay flow, tuner layout/caret-glow sync, frame loop, and renderer/state/audio coordination.
 - `styles.css`: page layout, full-screen canvas, responsive dialog/control overlays, accessibility states.
 - `shaders/`: the six verbatim GLSL passes extracted from the siri27 bundle.
 
