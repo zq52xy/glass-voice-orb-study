@@ -15,6 +15,7 @@ This project is a non-commercial WebGL study of a liquid-glass voice orb. A tran
 ## Modules
 
 - `src/`: shader loading, GL plumbing, background presets, uniform dictionary, spring state, audio, render loop.
+- `assets/`: compressed background preset images consumed by `src/backgrounds.js`, including the WWDC26 second preset.
 - `src/shaders/`: the six verbatim GLSL passes (vertex + background/wave/dots/compose/glass).
 - `docs/`: bilingual public release documentation, attribution quality contract, and curated README preview media.
 - `eval/`: visual rendering contract, work contract, and local evidence.

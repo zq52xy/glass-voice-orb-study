@@ -6,16 +6,15 @@ POS: Background-switching feature; reads window.SIRI_RENDERER, owns no GL state.
 */
 (function () {
   const DIR = "./assets/";
-  // 背景清单：个人学习用预设；新增背景在此登记即可。
+  // 背景清单：个人学习用预设；新增背景在这里登记即可。
   const LIST = [
     { file: "aurora-glass-ball.webp", label: "极光" },
-    { file: "0808bb244676405.699d0d0469a67.webp", label: "雪街" },
+    { file: "wwdc26-wallpaper-mac.webp", label: "WWDC26" },
     { file: "4d53de244676405.699d0d046c4dc.webp", label: "雪夜" },
-    { file: "96bdad248714663.69fdafdc31e48.webp", label: "AI \u9762\u5b54" },
+    { file: "96bdad248714663.69fdafdc31e48.webp", label: "AI 面孔" },
     { file: "background-white.png", label: "白色" },
     { file: "background-black.png", label: "黑色" },
   ];
-
   window.SIRI_DEFAULT_BG = DIR + LIST[0].file;
 
   const CSS = `

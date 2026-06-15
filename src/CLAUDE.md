@@ -7,7 +7,7 @@
 - `uniforms.js`: per-pass uniform dictionary holding the 1:1 siri27 values; no GL, no animation.
 - `state.js`: spring state machine (idle/listening/thinking/dialog) ported from siri27; derives channels.
 - `renderer.js`: owns the effect->scene->glass draw order, responsive glass layout, background image, and resize.
-- `backgrounds.js`: owns the selectable background preset manifest, picker UI, and upload path.
+- `backgrounds.js`: owns the selectable background preset manifest, picker UI, WWDC26 second preset, and upload path.
 - `tuner.js`: default-visible tuning panel for shared visual/layout parameters; hide with `?tuner=0`.
 - `audio.js`: microphone permission, FFT low/mid/high band split, and demo fallback.
 - `main.js`: gesture wiring, dialog overlay flow, tuner layout sync, frame loop, and renderer/state/audio coordination.
