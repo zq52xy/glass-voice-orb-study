@@ -1,8 +1,8 @@
 /*
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 INPUT: None at load; defines window.SIRI_PARAMS defaults and builds a control panel.
-OUTPUT: A floating dev panel that live-edits window.SIRI_PARAMS (read by uniforms/renderer).
-POS: Optional tuning tool; remove this file + its <script> to ship without controls.
+OUTPUT: A floating dev panel that live-edits window.SIRI_PARAMS and emits parameter-change events.
+POS: Optional tuning tool; renderer and DOM overlay layout subscribe to its shared parameters.
 */
 (function () {
   // ---- 参数 schema：key / 中文标签 / 区间 / 步长 / 默认值（= siri27 原值）----
@@ -65,6 +65,10 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
   GROUPS.forEach((g) => g.items.forEach((it) => (params[it.key] = it.def)));
   window.SIRI_PARAMS = params;
 
+  function emitChange(key) {
+    window.dispatchEvent(new CustomEvent("siri-params-change", { detail: { key, params } }));
+  }
+
   const showTuner = new URLSearchParams(window.location.search).get("tuner") !== "0";
 
   const CSS = `
@@ -121,6 +125,7 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
         const k = inp.dataset.k;
         params[k] = parseFloat(inp.value);
         document.getElementById("v-" + k).textContent = params[k];
+        emitChange(k);
       });
     });
     panel.querySelector("header").addEventListener("click", () => panel.classList.toggle("collapsed"));
@@ -138,6 +143,7 @@ POS: Optional tuning tool; remove this file + its <script> to ship without contr
         panel.querySelector(`input[data-k="${it.key}"]`).value = it.def;
         document.getElementById("v-" + it.key).textContent = it.def;
       }));
+      emitChange("reset");
     });
     // 面板上的指针事件不冒泡到 canvas/window，避免误触发 listening
     ["pointerdown", "pointerup"].forEach((ev) =>

@@ -18,6 +18,7 @@ This project is a non-commercial WebGL study of a liquid-glass voice orb. A tran
 - `src/shaders/`: the six verbatim GLSL passes (vertex + background/wave/dots/compose/glass).
 - `docs/`: bilingual public release documentation, attribution quality contract, and curated README preview media.
 - `eval/`: visual rendering contract, work contract, and local evidence.
+- `index.html`: root page shell and cache-busted script/style order for tuner, renderer, and app wiring.
 
 ## Licensing
 

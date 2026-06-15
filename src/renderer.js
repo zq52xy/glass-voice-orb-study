@@ -2,7 +2,7 @@
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 INPUT: Canvas, loaded shaders, background image, and per-frame state/audio channels.
 OUTPUT: Three-FBO glass-refraction render of the siri27 effect onto the canvas.
-POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
+POS: Owns draw order and responsive glass layout; DOM overlays mirror these viewport clamps.
 */
 (function () {
   const P = window.SiriPipeline;
@@ -15,6 +15,7 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
   const DIALOG_H = 110;
   const CORNER_MAX = 44;
   const CONTAINER = { black: 0.25, fade: 1, gauss: 8, strength: 0.9 };
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const param = (key, fallback) => {
     const p = window.SIRI_PARAMS;
     return p && typeof p[key] === "number" ? p[key] : fallback;
@@ -99,7 +100,13 @@ POS: Owns the effect->scene->glass draw order, layout, and 1:1 uniform values.
       const a = 1 + press * 0.018 + breathe;
       const margin = param("margin", MARGIN) * this.dpr;
       const base = ballWidth() * this.dpr * a;
-      const dw = Math.min(param("dialogWidth", DIALOG_W) * this.dpr, this.width - 48 * this.dpr);
+      const viewportW = this.width / this.dpr;
+      const maxDialogW = Math.max(1, viewportW - 48);
+      const responsiveDialogW = Math.min(clamp(viewportW * 0.44, 320, 560), maxDialogW);
+      const tunedDialogW = param("dialogWidth", DIALOG_W);
+      const requestedDialogW = tunedDialogW === DIALOG_W ? responsiveDialogW : tunedDialogW;
+      const minDialogW = Math.min(260, maxDialogW);
+      const dw = clamp(requestedDialogW, minDialogW, maxDialogW) * this.dpr;
       const dh = param("dialogHeight", DIALOG_H) * this.dpr;
       const innerW = base + (dw - base) * dialog;
       const innerH = base + (dh - base) * dialog;

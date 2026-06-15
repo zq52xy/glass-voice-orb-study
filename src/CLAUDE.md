@@ -6,12 +6,12 @@
 - `pipeline.js`: low-level GL plumbing — program compile, FBO render targets, uniform/texture upload.
 - `uniforms.js`: per-pass uniform dictionary holding the 1:1 siri27 values; no GL, no animation.
 - `state.js`: spring state machine (idle/listening/thinking/dialog) ported from siri27; derives channels.
-- `renderer.js`: owns the effect->scene->glass draw order, layout, background image, and resize.
+- `renderer.js`: owns the effect->scene->glass draw order, responsive glass layout, background image, and resize.
 - `backgrounds.js`: owns the selectable background preset manifest, picker UI, and upload path.
-- `tuner.js`: default-visible in-browser tuning panel for visual parameters; hide with `?tuner=0`.
+- `tuner.js`: default-visible tuning panel for shared visual/layout parameters; hide with `?tuner=0`.
 - `audio.js`: microphone permission, FFT low/mid/high band split, and demo fallback.
-- `main.js`: gesture wiring, dialog overlay flow, frame loop, and renderer/state/audio coordination.
-- `styles.css`: page layout, full-screen canvas, bottom status control, accessibility states.
+- `main.js`: gesture wiring, dialog overlay flow, tuner layout sync, frame loop, and renderer/state/audio coordination.
+- `styles.css`: page layout, full-screen canvas, responsive dialog/control overlays, accessibility states.
 - `shaders/`: the six verbatim GLSL passes extracted from the siri27 bundle.
 
 ## Boundaries

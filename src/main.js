@@ -1,8 +1,8 @@
 /*
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
-INPUT: DOM controls, dialog overlay, pointer/keyboard gestures, renderer, state, audio.
-OUTPUT: idle/listening/thinking/dialog transitions driving the glass orb and UI container.
-POS: App coordinator only; rendering, state, and audio internals stay in siblings.
+INPUT: DOM controls, dialog overlay, tuner parameter events, renderer, state, audio.
+OUTPUT: idle/listening/thinking/dialog transitions plus synchronized dialog overlay layout.
+POS: App coordinator only; keeps DOM overlay geometry aligned with renderer layout parameters.
 */
 (function () {
   const canvas = document.querySelector("#siri-canvas");
@@ -18,12 +18,27 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
   window.SIRI_STATE = state;
   const meter = new window.SiriAudioMeter();
   const LONG_PRESS_MS = 360;
+  const DEFAULT_DIALOG_WIDTH = 460;
   const DEFAULT_REPLY = "我是智能助手，有什么可以帮到您？";
   let releaseTimer = 0;
   let pressTimer = 0;
   let clickArmed = false;
   let lastFrame = performance.now();
   let startTime = performance.now();
+
+  function responsiveDialogWidth() {
+    const viewportW = window.innerWidth || document.documentElement.clientWidth || DEFAULT_DIALOG_WIDTH;
+    const maxDialogW = Math.max(1, viewportW - 48);
+    const responsiveW = Math.min(Math.max(viewportW * 0.44, 320), 560, maxDialogW);
+    const tunedW = window.SIRI_PARAMS && typeof window.SIRI_PARAMS.dialogWidth === "number"
+      ? window.SIRI_PARAMS.dialogWidth
+      : DEFAULT_DIALOG_WIDTH;
+    return tunedW === DEFAULT_DIALOG_WIDTH ? responsiveW : Math.min(Math.max(tunedW, 260), maxDialogW);
+  }
+
+  function syncDialogLayout() {
+    document.documentElement.style.setProperty("--dialog-inline", `${responsiveDialogWidth()}px`);
+  }
 
   function setMessage(text, hiddenText) {
     control.textContent = text;
@@ -177,11 +192,14 @@ POS: App coordinator only; rendering, state, and audio internals stay in sibling
   });
   window.addEventListener("keydown", onKeyDown);
   window.addEventListener("keyup", onKeyUp);
+  window.addEventListener("resize", syncDialogLayout, { passive: true });
+  window.addEventListener("siri-params-change", syncDialogLayout);
   window.addEventListener("contextmenu", (event) => event.preventDefault());
 
   async function boot() {
     try {
       await renderer.init();
+      syncDialogLayout();
       setDialog("idle");
       setMessage("Hold to speak", "Idle.");
       startTime = performance.now();
